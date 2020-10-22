@@ -10,7 +10,7 @@ db = SQLAlchemy(app)
 @app.route('/')
 def hello():
     name = request.args.get("name", "World")
-    return f'Hello, {escape(name)}!'
+    return render_template('base.html')
 
 @app.route('/sample/<file_name>')
 def sample_review(file_name):
