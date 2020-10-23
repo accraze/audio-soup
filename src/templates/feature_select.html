@@ -1,15 +1,137 @@
 {% extends 'base.html' %}
 
 {% block header %}
-  <h1>{% block title %}Register{% endblock %}</h1>
+  <h1>{% block title %}Feature Selection{% endblock %}</h1>
+{% endblock %}
+{% block subtitle %}
+Feature Selection
 {% endblock %}
 
 {% block content %}
-  <form method="post">
-    <label for="username">Username</label>
-    <input name="username" id="username" required>
-    <label for="password">Password</label>
-    <input type="password" name="password" id="password" required>
-    <input type="submit" value="Register">
-  </form>
+  {# <form method="post"> #}
+  {#   <label for="username">Username</label> #}
+  {#   <input name="username" id="username" required> #}
+  {#   <label for="password">Password</label> #}
+  {#   <input type="password" name="password" id="password" required> #}
+  {#   <input type="submit" value="Register"> #}
+  {# </form> #}
+<section class="section">
+        <div class="container">
+          <div class="columns is-multiline">
+            <div class="column is-one-third">
+              <article class="notification media has-background-white">
+                <figure class="media-left">
+                  <span class="icon">
+                    <i class="has-text-warning fa fa-columns fa-lg"></i>
+                  </span>
+                </figure>
+                <div class="media-content">
+                  <div class="content">
+                    <h1 class="title is-size-4">0a7cnohash_0.wav</h1>
+                    <p class="is-size-5 subtitle">
+                      <p><b>Label:</b> Down<br><b>Sample Rate:</b> 44100<br><b>Text:</b> Emotive Neutral</p>
+                    </p>
+                  </div>
+                </div>
+              </article>
+            </div>
+            <div class="column is-one-third">
+              <article class="notification has-background-white media">
+                <figure class="media-left">
+                  <span class="icon has-text-info">
+                    <i class="fa fa-file-audio"></i>
+                  </span>
+                </figure>
+                <div class="media-content">
+                  <div class="content">
+                    <h1 class="title is-size-4">Waveform</h1>
+                    <p class="is-size-5 subtitle">
+                      <figure class="image">
+                        <img src="/static/wave.png" alt="audio waveform">
+                      </figure>
+                    <audio
+                      controls
+                      src="/media/cc0-audio/t-rex-roar.mp3">
+                      Your browser does not support the
+                      <code>audio</code> element.
+                    </audio><br>
+                    </p>
+                  </div>
+                </div>
+              </article>
+            </div>
+            <div class="column is-one-third">
+              <article class="notification has-background-white media">
+                <figure class="media-left">
+                  <span class="icon has-text-danger">
+                    <i class="fa fa-lg fa-cubes"></i>
+                  </span>
+                </figure>
+                <div class="media-content">
+                  <div class="content">
+                    <h1 class="title is-size-4">Mel Spectrogram</h1>
+                    <p class="is-size-5 subtitle">
+                      <figure class="">
+                        <img src="/static/melspec.png" alt="mel spectrogram">
+                      </figure>
+                    </p>
+                  </div>
+                </div>
+              </article>
+            </div>
+            <div class="column is-one-third">
+              <article class="notification has-background-white media">
+                <figure class="media-left">
+                  <span class="icon has-text-grey">
+                    <i class="fa fa-lg fa-cogs"></i>
+                  </span>
+                </figure>
+                <div class="media-content">
+                  <div class="content">
+                    <h1 class="title is-size-4">Modifiers</h1>
+                    <p class="is-size-5 subtitle">
+                      An <strong>easy-to-read</strong> naming system designed for humans
+                    </p>
+                  </div>
+                </div>
+              </article>
+            </div>
+            <div class="column is-one-third">
+              <article class="notification has-background-white media">
+                <figure class="media-left">
+                  <span class="icon has-text-primary">
+                    <i class="fa fa-lg fa-superpowers"></i>
+                  </span>
+                </figure>
+                <div class="media-content">
+                  <div class="content">
+                    <h1 class="title is-size-4">Layout</h1>
+                    <p class="is-size-5 subtitle">
+                      Design the <strong>structure</strong> of your webpage with these CSS classes
+                    </p>
+                  </div>
+                </div>
+              </article>
+            </div>
+            <div class="column is-one-third">
+              <article class="notification has-background-white media">
+                <figure class="media-left">
+                  <span class="icon has-text-danger">
+                    <i class="fa fa-lg fa-cube"></i>
+                  </span>
+                </figure>
+                <div class="media-content">
+                  <div class="content">
+                    <h1 class="title is-size-4">Elements</h1>
+                    <p class="is-size-5 subtitle">
+                      Essential interface elements that only require a <strong>single CSS class</strong>
+                    </p>
+                  </div>
+                </div>
+              </article>
+            </div>
+          </div>
+        </div>
+      </section>
+
 {% endblock %}

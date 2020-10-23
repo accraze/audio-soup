@@ -36,6 +36,7 @@
 {#   {% endfor %} #}
 {#   {% block content %}{% endblock %} #}
 {# </section> #}
+{% block hero %}
 <section class="hero is-info is-small">
       <div class="hero-body">
         <div class="container has-text-centered">
@@ -43,6 +44,9 @@
             Audio Soup
           </p>
           <p class="subtitle">
+           {% block subtitle %}
+           Sample Review
+           {% endblock %}
            {# <li><a href="{{ url_for('sample_review',file_name='boo') }}">Sample Review</a> #}
            {# <li><a href="{{ url_for('feature_select') }}">Feature Selection</a> #}
           </p>
@@ -54,6 +58,8 @@
     {#     <span class="tag is-primary">New</span> Here we have modal cards. When you click on them they will open functional modal examples. #}
     {#   </p> #}
     {# </div> #}
+{% endblock %}
+{% block content %}
     <section class="container">
       <div class="columns features">
         <div class="column is-4">
@@ -383,7 +389,7 @@
                 </audio><br>
                 {# <p class="subtitle is-6">@jane_doe</p> #}
               <span class="button is-primary">Edit</span>
-              <span class="button is-link">View Features</span>
+              <span class="button is-link"> <a href="{{ url_for('feature_select', ftype='foo') }}">View Features</a></span>
               {# <br><br> #}
               </div>
             </div>
@@ -454,6 +460,7 @@
       </div>
       <button class="modal-close is-large" aria-label="close"></button>
     </div>
+    {% endblock %}
     <script src="https://unpkg.com/bulma-modal-fx/dist/js/modal-fx.min.js"></script>
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
     <script src='https://cdnjs.cloudflare.com/ajax/libs/overlayscrollbars/1.9.1/js/OverlayScrollbars.min.js'></script>

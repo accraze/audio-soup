@@ -17,6 +17,6 @@ def sample_review(file_name):
     print(file_name)
     return render_template('sample_review.html')
 
-@app.route('/feature/<f_type>')
-def plot_feature(f_type):
-    pass
+@app.route('/feature_select/<ftype>')
+def feature_select(ftype):
+    return render_template('feature_select.html')
