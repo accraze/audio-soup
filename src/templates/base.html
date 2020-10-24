@@ -53,16 +53,94 @@
         </div>
       </div>
     </section>
+<nav class="navbar" role="navigation" aria-label="main navigation">
+  <div class="navbar-brand" style="margin-left:8%;">
+{#     <a class="navbar-item" href="https://bulma.io"> #}
+{# FILTER LABELS #}
+{#     </a> #}
+
+    <a role="button" class="navbar-burger burger" aria-label="menu" aria-expanded="false" data-target="navbarBasicExample">
+      <span aria-hidden="true"></span>
+      <span aria-hidden="true"></span>
+      <span aria-hidden="true"></span>
+    </a>
+  </div>
+
+  <div id="navbarBasicExample" class="navbar-menu">
+    <div class="navbar-start">
+      <div class="navbar-item has-dropdown is-hoverable">
+        <a class="navbar-link">
+        Labels
+        </a>
+        <div class="navbar-dropdown">
+          <a class="navbar-item">
+            All
+          </a>
+          <hr class="navbar-divider">
+          <a class="navbar-item checkbox">
+            Down
+          </a>
+          <a class="navbar-item">
+            Go
+          </a>
+          <a class="navbar-item">
+            Left
+          </a>
+         <a class="navbar-item">
+            No
+          </a>
+        <a class="navbar-item">
+            Off
+          </a>
+        <a class="navbar-item">
+            On
+          </a>
+        <a class="navbar-item">
+            Right
+          </a>
+        <a class="navbar-item">
+            Stop
+          </a>
+        <a class="navbar-item">
+            Up
+          </a>
+        <a class="navbar-item">
+            Yes
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+</nav>
     {# <div class="box cta"> #}
     {#   <p class="has-text-centered"> #}
-    {#     <span class="tag is-primary">New</span> Here we have modal cards. When you click on them they will open functional modal examples. #}
-    {#   </p> #}
-    {# </div> #}
+    {#     {# <span class="tag is-primary">New</span> Here we have modal cards. When you click on them they will open functional modal examples. #}
+    {#     <aside class=""> #}
+    {#       <p class="menu-label"> #}
+    {#         Filter Labels #}
+    {#       </p> #}
+    {#       <ul class="menu-list"> #}
+    {#         <li><a>Down</a></li> #}
+    {#         <li><a>Go</a></li> #}
+    {#         <li><a>Left</a></li> #}
+    {#         <li><a>No</a></li> #}
+    {#         <li><a>Off</a></li> #}
+    {#         <li><a>On</a></li> #}
+    {#         <li><a>Right</a></li> #}
+    {#         <li><a>Stop</a></li> #}
+    {#         <li><a>Up</a></li> #}
+    {#         <li><a>Yes</a></li> #}
+    {#       </ul> #}
+    {#     </aside> #}
+    {#  #}
+      </p>
+    </div>
 {% endblock %}
 {% block content %}
     <section class="container">
+
       <div class="columns features">
-        <div class="column is-4">
+                <div class="column is-4">
           <div class="card is-shady">
             <div class="card-image">
               <figure class="image is-4by3">
@@ -461,18 +539,6 @@
       <button class="modal-close is-large" aria-label="close"></button>
     </div>
     {% endblock %}
-		<!-- Image modal-->
-    <div id="modal-image" class="modal modal-fx-superScaled">
-      <div class="modal-background"></div>
-      <div class="modal-content  is-image">
-        <!-- content -->
-        <img src="https://ultraimg.com/images/yHrYA.jpg" alt="Placeholder image">
-        <!--     <img src="https://source.unsplash.com/zFrUz_tNjCY" alt="placeholder">
-        -->    <!-- end content -->
-      </div>
-      <button class="modal-close is-large" aria-label="close"></button>
-    </div>
-
     <script src="https://unpkg.com/bulma-modal-fx/dist/js/modal-fx.min.js"></script>
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
     <script src='https://cdnjs.cloudflare.com/ajax/libs/overlayscrollbars/1.9.1/js/OverlayScrollbars.min.js'></script>
