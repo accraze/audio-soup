@@ -1,22 +1,25 @@
 from flask import Flask, escape, request, render_template
-from flask_sqlalchemy import SQLAlchemy
 import os
 
-app = Flask(__name__)
-app.config.from_object(os.environ['APP_SETTINGS'])
-app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
-db = SQLAlchemy(app)
+from .extensions import db
+from .public import views
 
-@app.route('/')
-def hello():
-    name = request.args.get("name", "World")
-    return render_template('base.html')
+def register_extensions(app):
+    db.init_app(app)
 
-@app.route('/sample/<file_name>')
-def sample_review(file_name):
-    print(file_name)
-    return render_template('sample_review.html')
+def create_app(config_object="src.config"):
+    app = Flask(__name__)
+    app.config.from_object(config_object)
+    app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
+    register_extensions(app)
+    register_blueprints(app)
+    return app
 
-@app.route('/feature_select/<ftype>')
-def feature_select(ftype):
-    return render_template('feature_select.html')
+def register_blueprints(app):
+    """Register Flask blueprints."""
+    app.register_blueprint(views.blueprint)
+    return None
+
+app = create_app()
+
+

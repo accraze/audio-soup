@@ -1,12 +1,23 @@
-import os
+# -*- coding: utf-8 -*-
+"""Application configuration.
+Most configuration is set via environment variables.
+For local development, use a .env file to set
+environment variables.
+"""
+from environs import Env
 
-basedir = os.path.abspath(os.path.dirname(__file__))
+env = Env()
+env.read_env()
 
-
-class Config(object):
-    DEBUG = False
-    TESTING = False
-    CSRF_ENABLED = True
-    SECRET_KEY = 'this-really-needs-to-be-changed'
-    SQLALCHEMY_DATABASE_URI = os.environ['DATABASE_URL']
+ENV = env.str("FLASK_ENV", default="production")
+DEBUG = ENV == "development"
+SQLALCHEMY_DATABASE_URI = env.str("DATABASE_URL")
+SECRET_KEY = env.str("SECRET_KEY", 'changeme')
+#SEND_FILE_MAX_AGE_DEFAULT = env.int("SEND_FILE_MAX_AGE_DEFAULT")
+BCRYPT_LOG_ROUNDS = env.int("BCRYPT_LOG_ROUNDS", default=13)
+DEBUG_TB_ENABLED = DEBUG
+DEBUG_TB_INTERCEPT_REDIRECTS = False
+CSRF_ENABLED = True
+CACHE_TYPE = "simple"  # Can be "memcached", "redis", etc.
+SQLALCHEMY_TRACK_MODIFICATIONS = False
 
