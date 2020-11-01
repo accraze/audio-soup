@@ -1,8 +1,8 @@
 """empty message
 
-Revision ID: 80e8e0c4ffc3
+Revision ID: aad250a429c5
 Revises: 
-Create Date: 2020-10-20 21:52:36.766112
+Create Date: 2020-11-01 07:37:34.019896
 
 """
 from alembic import op
@@ -10,7 +10,7 @@ import sqlalchemy as sa
 from sqlalchemy.dialects import postgresql
 
 # revision identifiers, used by Alembic.
-revision = '80e8e0c4ffc3'
+revision = 'aad250a429c5'
 down_revision = None
 branch_labels = None
 depends_on = None
@@ -32,13 +32,13 @@ def upgrade():
     op.create_table('audiofile',
     sa.Column('id', sa.Integer(), nullable=False),
     sa.Column('name', sa.String(), nullable=True),
-    sa.Column('sample_rate', sa.Integer(), nullable=False),
+    sa.Column('sample_rate', sa.Integer(), nullable=True),
     sa.Column('dataset_id', sa.Integer(), nullable=True),
     sa.Column('label_id', sa.Integer(), nullable=True),
     sa.Column('text', postgresql.JSON(astext_type=sa.Text()), nullable=True),
     sa.ForeignKeyConstraint(['dataset_id'], ['dataset.id'], ),
     sa.ForeignKeyConstraint(['label_id'], ['label.id'], ),
-    sa.PrimaryKeyConstraint('id', 'sample_rate')
+    sa.PrimaryKeyConstraint('id')
     )
     # ### end Alembic commands ###
 
