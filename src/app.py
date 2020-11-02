@@ -2,6 +2,7 @@ from flask import Flask, escape, request, render_template
 import os
 
 from .extensions import db
+from .filters import split_name
 from .public import views
 
 def register_extensions(app):
@@ -13,12 +14,16 @@ def create_app(config_object="src.config"):
     app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
     register_extensions(app)
     register_blueprints(app)
+    register_filters(app)
     return app
 
 def register_blueprints(app):
     """Register Flask blueprints."""
     app.register_blueprint(views.blueprint)
     return None
+
+def register_filters(app):
+    app.jinja_env.filters['split_name'] = split_name
 
 app = create_app()
 
