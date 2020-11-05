@@ -165,94 +165,38 @@
               <div class="content">
                 <h4>{{sample.name|split_name}}</h4>
 								<p>Label: {{sample.label_id}}<br>Sample Rate: {{sample.sample_rate}}<br>Text: Emotive Neutral</p>
-                <span class="button is-link modal-button" data-target="modal-card2">Review</span>
+                <span class="button is-link modal-button" data-target="modal-card2_{{sample.id}}">Review</span>
               </div>
             </div>
           </div>
 				</div>
-				{% endfor %}
-			</div>
-			{% endfor %}
-    </section>
-    <footer>
-		    </footer>
-    <!--  ===============
-    HERE BE MODALS
-    ===============  -->
-    <!-- 3dFlipVertical card tiny -->
-    <div id="modal-card" class="modal modal-fx-3dSlit">
+      <div id="modal-card2_{{sample.id}}" class="modal modal-fx-3dSlit">
       <div class="modal-background"></div>
       <div class="modal-content is-tiny">
         <!-- content -->
         <div class="card">
           <div class="card-image">
             <figure class="image is-4by3">
-              <img src="/static/wave.png" alt="Placeholder image">
+              <img src="/static/wave.png" alt="{{sample.id}}-waveform-img">
             </figure>
           </div>
           <div class="card-content">
             <div class="media">
-              <div class="media-left">
-                <figure class="image is-48x48">
-                  <img src="/static/wave.png" alt="linda barret avatar">
-                </figure>
-              </div>
               <div class="media-content">
-                <p class="title is-4">Jane Doe</p>
-                <p class="subtitle is-6">@jane_doe</p>
-              </div>
-            </div>
-            <div class="content">
-              Laum Ipsum junkah potatoes bookin' it. Moosetown rig up I'm tellin' you way up north bookin' it can't get theyah from heeyah native bean suppah whawf Powrtland Museum of Aht, back woods hawsun around the pit mummah Yessah, mummah muckle riyht on'ta her
-              Bean's dinnahbucket bub geez bud sumpin' fierce ayuhpawt Bangah naw, Powrtland Museum of Aht down cellah sumpin' fierce hoppa bub If you can't stand the wintah you don't deserve the summah slower than molasses going uphill in January.
-              Sgn'wahl shoggor hrii uaaah R'lyeh uh'e k'yarnak Hastur hupadgh li'hee, hai f'nilgh'ri nilgh'ri n'ghftor ngftaghu vulgtlagln h'hrii throd Nyarlathotep lloig, naflsll'ha nnnsll'ha athg y-ebunma goka chtenff ehyeog cehye. Zhro y'hah
-              nogoth phlegeth stell'bsna orr'e ph'Hastur gnaiih throd, uln ya lw'nafh mg nar'luh li'hee wgah'n, sgn'wahl mg nakadishtu chlirgh hupadgh tharanak h'gnaiih.
-              <a>@bulmaio</a>.
-              <a href="#">#css</a>
-              <a href="#">#responsive</a>
-              <br>
-              <time datetime="2018-02-02">12:45 AM - 20 June 2018</time>
-            </div>
-          </div>
-        </div>
-        <!-- end content -->
-      </div>
-      <button class="modal-close is-large" aria-label="close"></button>
-    </div>
-    <!-- end tiny modal card -->
-    <!-- 3dFlipVertical card tiny [butterfly] -->
-    <div id="modal-card2" class="modal modal-fx-3dSlit">
-      <div class="modal-background"></div>
-      <div class="modal-content is-tiny">
-        <!-- content -->
-        <div class="card">
-          <div class="card-image">
-            <figure class="image is-4by3">
-              <img src="/static/wave.png" alt="butterfly">
-            </figure>
-          </div>
-          <div class="card-content">
-            <div class="media">
-              {# <div class="media-left"> #}
-              {#   <figure class="image is-48x48"> #}
-              {#     <img src="http://www.radfaces.com/images/avatars/linda-barret.jpg" alt="linda barret avatar"> #}
-              {#   </figure> #}
-              {# </div> #}
-              <div class="media-content">
-                <p class="title is-4">0a7c2a8d_nohash_0.wav</p>
+                <p class="title is-4">{{sample.name|split_name}}</p>
                 <audio
                   controls
-                  src="/media/cc0-audio/t-rex-roar.mp3">
+                  src="static/dataset/{{sample.name}}"
                   Your browser does not support the
                   <code>audio</code> element.
                 </audio><br>
                 {# <p class="subtitle is-6">@jane_doe</p> #}
               <span class="button is-primary">Edit</span>
-              <span class="button is-link"> <a href="{{ url_for('public.feature_select', ftype='foo') }}">View Features</a></span>
+              <span class="button is-link"> <a href="{{ url_for('public.feature_select', ftype='{{sample.id}}') }}">View Features</a></span>
               {# <br><br> #}
               </div>
             </div>
-              <p><b>Label:</b> Down<br><b>Sample Rate:</b> 44100 Hz<br><b>Text:</b> Emotive Neutral</p>
+              <p><b>Label:</b> {{sample.label_id}}<br><b>Sample Rate:</b> {{sample.sample_rate}}<br><b>Text:</b> {{sample.text}}</p>
               <b>Last Edited:</b> <time datetime="2018-02-02">12:45 AM - 20 May 2018</time>
               {# <form> #}
               {# <p><b>Label:</b> #}
@@ -287,44 +231,18 @@
       </div>
       <button class="modal-close is-large" aria-label="close"></button>
     </div>
-    <!-- end tiny modal card -->
-    <!-- Image modal -->
-    <div id="modal-image2" class="modal modal-fx-3dSlit">
-      <div class="modal-background"></div>
-      <div class="modal-content is-huge is-image">
-        <!-- content -->
-        <img src="https://source.unsplash.com/RWnpyGtY1aU" alt="image">
-        <!-- end content -->
-      </div>
-      <button class="modal-close is-large" aria-label="close"></button>
-    </div>
-    <!-- Image modal -->
-    <div id="modal-image4" class="modal modal-fx-3dSlit">
-      <div class="modal-background"></div>
-      <div class="modal-content is-huge is-image">
-        <!-- content -->
-        <img src="https://source.unsplash.com/hLyd1LukQ7E" alt="butterfly">
-        <!-- end content -->
-      </div>
-      <button class="modal-close is-large" aria-label="close"></button>
-    </div>
-    <!-- Image modal-->
-    <div id="modal-image" class="modal modal-fx-superScaled">
-      <div class="modal-background"></div>
-      <div class="modal-content  is-image">
-        <!-- content -->
-        <img src="https://ultraimg.com/images/yHrYA.jpg" alt="Placeholder image">
-        <!--     <img src="https://source.unsplash.com/zFrUz_tNjCY" alt="placeholder">
-        -->    <!-- end content -->
-      </div>
-      <button class="modal-close is-large" aria-label="close"></button>
-    </div>
+				{% endfor %}
+			</div>
+			{% endfor %}
+    </section>
+    <footer>
+    </footer>
     {% endblock %}
     <script src="https://unpkg.com/bulma-modal-fx/dist/js/modal-fx.min.js"></script>
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
     <script src='https://cdnjs.cloudflare.com/ajax/libs/overlayscrollbars/1.9.1/js/OverlayScrollbars.min.js'></script>
     {# <script src="../js/wild.js"></script> #}
-        <script>
+         <script>
         document.addEventListener("DOMContentLoaded", function() {
         //The first argument are the elements to which the plugin shall be initialized
         //The second argument has to be at least a empty object or a object with your desired options
