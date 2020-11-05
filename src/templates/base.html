@@ -164,7 +164,7 @@
             <div class="card-content">
               <div class="content">
                 <h4>{{sample.name|split_name}}</h4>
-								<p>Label: {{sample.label_id}}<br>Sample Rate: {{sample.sample_rate}}<br>Text: Emotive Neutral</p>
+								<p>Label: {{sample.name|split_name_label|title}}<br>Sample Rate: {{sample.sample_rate}}<br>Text: Emotive Neutral</p>
                 <span class="button is-link modal-button" data-target="modal-card2_{{sample.id}}">Review</span>
               </div>
             </div>
@@ -196,7 +196,7 @@
               {# <br><br> #}
               </div>
             </div>
-              <p><b>Label:</b> {{sample.label_id}}<br><b>Sample Rate:</b> {{sample.sample_rate}}<br><b>Text:</b> {{sample.text}}</p>
+              <p><b>Label:</b> {{sample.name|split_name_label|title}}<br><b>Sample Rate:</b> {{sample.sample_rate}}<br><b>Text:</b> {{sample.text}}</p>
               <b>Last Edited:</b> <time datetime="2018-02-02">12:45 AM - 20 May 2018</time>
               {# <form> #}
               {# <p><b>Label:</b> #}

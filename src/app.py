@@ -2,7 +2,7 @@ from flask import Flask, escape, request, render_template
 import os
 
 from .extensions import db
-from .filters import split_name
+from .filters import split_name, split_name_label
 from .public import views
 
 def register_extensions(app):
@@ -24,6 +24,7 @@ def register_blueprints(app):
 
 def register_filters(app):
     app.jinja_env.filters['split_name'] = split_name
+    app.jinja_env.filters['split_name_label'] = split_name_label
 
 app = create_app()
 
