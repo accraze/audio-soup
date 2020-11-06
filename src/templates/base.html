@@ -69,44 +69,19 @@
   <div id="navbarBasicExample" class="navbar-menu">
     <div class="navbar-start">
       <div class="navbar-item has-dropdown is-hoverable">
-        <a class="navbar-link">
+        <a class="navbar-link" >
         Labels
         </a>
         <div class="navbar-dropdown">
-          <a class="navbar-item">
+          <a class="navbar-item" href="{{url_for('public.grid_view')}}">
             All
           </a>
           <hr class="navbar-divider">
-          <a class="navbar-item checkbox">
-            Down
+					{% for label in labels %}
+          <a class="navbar-item checkbox" href="{{url_for('public.grid_view', label_filter=label.id)}}">
+            {{label.name|title}}
           </a>
-          <a class="navbar-item">
-            Go
-          </a>
-          <a class="navbar-item">
-            Left
-          </a>
-         <a class="navbar-item">
-            No
-          </a>
-        <a class="navbar-item">
-            Off
-          </a>
-        <a class="navbar-item">
-            On
-          </a>
-        <a class="navbar-item">
-            Right
-          </a>
-        <a class="navbar-item">
-            Stop
-          </a>
-        <a class="navbar-item">
-            Up
-          </a>
-        <a class="navbar-item">
-            Yes
-          </a>
+					{% endfor %}
         </div>
       </div>
     </div>
@@ -192,7 +167,7 @@
                 </audio><br>
                 {# <p class="subtitle is-6">@jane_doe</p> #}
               <span class="button is-primary">Edit</span>
-              <span class="button is-link"> <a href="{{ url_for('public.feature_select', ftype='{{sample.id}}') }}">View Features</a></span>
+              <span class="button is-link"> <a href="{{ url_for('public.feature_select', ftype=sample.id) }}">View Features</a></span>
               {# <br><br> #}
               </div>
             </div>

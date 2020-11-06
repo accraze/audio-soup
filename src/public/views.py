@@ -11,7 +11,7 @@ from flask import (
 )
 from flask_paginate import Pagination, get_page_args
 
-from ..models import AudioFile
+from ..models import AudioFile, Label
 
 
 blueprint = Blueprint("public", __name__, static_folder="../static")
@@ -19,7 +19,11 @@ blueprint = Blueprint("public", __name__, static_folder="../static")
 
 @blueprint.route('/', methods=["GET", "POST"])
 def grid_view():
-    audio_samples = AudioFile.query.all()
+    label_filter = request.args.get('label_filter', None)
+    if not label_filter:
+        audio_samples = AudioFile.query.all()
+    else:
+        audio_samples = AudioFile.query.filter(AudioFile.label_id != label_filter).all()
     page, per_page, offset = get_page_args(page_parameter='page',
                                            per_page_parameter='per_page')
     total = len(audio_samples)
@@ -30,9 +34,11 @@ def grid_view():
     audio_grid = [pagination_samples[i * 3:(i + 1) * 3]
                   for i in range((len(pagination_samples) + 3 - 1) // 3)]
 
+    labels = Label.query.all()
+
     return render_template('base.html', grid=audio_grid, page=page,
                            per_page=per_page,
-                           pagination=pagination,)
+                           pagination=pagination, labels=labels)
 
 
 def get_paginated_samples(samples, offset=0, per_page=9):
