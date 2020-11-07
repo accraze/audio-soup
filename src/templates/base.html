@@ -133,7 +133,7 @@
           <div class="card is-shady">
             <div class="card-image">
               <figure class="image is-4by3">
-                <img src="/static/wave.png" alt="audio waveform">
+                <img src="{{ waveform_image(sample.name) }}" alt="audio waveform">
               </figure>
             </div>
             <div class="card-content">
@@ -152,7 +152,7 @@
         <div class="card">
           <div class="card-image">
             <figure class="image is-4by3">
-              <img src="/static/wave.png" alt="{{sample.id}}-waveform-img">
+              <img src="{{ waveform_image(sample.name) }}" alt="{{sample.id}}-waveform-img">
             </figure>
           </div>
           <div class="card-content">
@@ -167,7 +167,7 @@
                 </audio><br>
                 {# <p class="subtitle is-6">@jane_doe</p> #}
               <span class="button is-primary">Edit</span>
-              <span class="button is-link"> <a href="{{ url_for('public.feature_select', ftype=sample.id) }}">View Features</a></span>
+              <span class="button"> <a href="{{ url_for('public.feature_select', ftype='{{sample.id}}') }}">View Features</a></span>
               {# <br><br> #}
               </div>
             </div>

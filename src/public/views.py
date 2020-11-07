@@ -11,6 +11,16 @@ from flask import (
 )
 from flask_paginate import Pagination, get_page_args
 
+import librosa.display
+import librosa
+import matplotlib.pylab as plt
+import io
+import base64
+
+from matplotlib.backends.backend_agg import FigureCanvasAgg as FigureCanvas
+from matplotlib.figure import Figure
+
+
 from ..models import AudioFile, Label
 
 
@@ -54,3 +64,25 @@ def sample_review(file_name):
 @blueprint.route('/feature_select/<ftype>')
 def feature_select(ftype):
     return render_template('feature_select.html')
+
+
+@blueprint.context_processor
+def utility_processor():
+  def waveform_image(audiofile):
+    try:
+      y, sr = librosa.load('static/dataset/'+audiofile)
+    except:
+      y = []
+    fig = Figure()
+    axis = fig.add_subplot(1, 1, 1)
+    axis.grid()
+    axis.plot(y)
+    plt.axis('off')
+    # Convert plot to PNG image
+    pngImage = io.BytesIO()
+    FigureCanvas(fig).print_png(pngImage)
+    # Encode PNG image to base64 string
+    pngImageB64String = "data:image/png;base64,"
+    pngImageB64String += base64.b64encode(pngImage.getvalue()).decode('utf8')
+    return pngImageB64String
+  return dict(waveform_image=waveform_image)
