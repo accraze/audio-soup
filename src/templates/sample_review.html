@@ -1,15 +1,145 @@
 {% extends 'base.html' %}
 
-{% block header %}
-  <h1>{% block title %}Sample Review{% endblock %}</h1>
+{% block hero %}
+<section class="hero is-info is-small">
+      <div class="hero-body">
+        <div class="container has-text-centered">
+          <p class="title">
+            Audio Soup
+          </p>
+          <p class="subtitle">
+           {% block subtitle %}
+           Sample Review
+           {% endblock %}
+          </p>
+        </div>
+      </div>
+    </section>
+<nav class="navbar" role="navigation" aria-label="main navigation">
+  <div class="navbar-brand" style="margin-left:8%;">
+    <a role="button" class="navbar-burger burger" aria-label="menu" aria-expanded="false" data-target="navbarBasicExample">
+      <span aria-hidden="true"></span>
+      <span aria-hidden="true"></span>
+      <span aria-hidden="true"></span>
+    </a>
+  </div>
+
+  <div id="navbarBasicExample" class="navbar-menu">
+    <div class="navbar-start">
+      <div class="navbar-item has-dropdown is-hoverable">
+        <a class="navbar-link" >
+        Labels
+        </a>
+        <div class="navbar-dropdown">
+          <a class="navbar-item" href="{{url_for('public.grid_view')}}">
+            All
+          </a>
+          <hr class="navbar-divider">
+					{% for label in labels %}
+          <a class="navbar-item checkbox" href="{{url_for('public.grid_view', label_filter=label.id)}}">
+            {{label.name|title}}
+          </a>
+					{% endfor %}
+        </div>
+      </div>
+    </div>
+  </div>
+<div class="navbar-end" style="margin-right: 2%;">
+  {{ pagination.links }}
+</div>
+</nav>
+      </p>
+    </div>
 {% endblock %}
 
+
 {% block content %}
-  <form method="post">
-    <label for="username">Username</label>
-    <input name="username" id="username" required>
-    <label for="password">Password</label>
-    <input type="password" name="password" id="password" required>
-    <input type="submit" value="Register">
-  </form>
-{% endblock %}
+    <section class="container">
+		  {% for row in grid %}
+      <div class="columns features">
+        {% for sample in row %}
+        <div class="column is-4">
+          <div class="card is-shady">
+            <div class="card-image">
+              <figure class="image is-4by3">
+                <img src="{{ waveform_image(sample.name) }}" alt="audio waveform">
+              </figure>
+            </div>
+            <div class="card-content">
+              <div class="content">
+                <h4>{{sample.name|split_name}}</h4>
+								<p>Label: {{sample.name|split_name_label|title}}<br>Sample Rate: {{sample.sample_rate}}<br>Text: Emotive Neutral</p>
+                <span class="button is-link modal-button" data-target="modal-card2_{{sample.id}}">Review</span>
+              </div>
+            </div>
+          </div>
+				</div>
+      <div id="modal-card2_{{sample.id}}" class="modal modal-fx-3dSlit">
+      <div class="modal-background"></div>
+      <div class="modal-content is-tiny">
+        <!-- content -->
+        <div class="card">
+          <div class="card-image">
+            <figure class="image is-4by3">
+              <img src="{{ waveform_image(sample.name) }}" alt="{{sample.id}}-waveform-img">
+            </figure>
+          </div>
+          <div class="card-content">
+            <div class="media">
+              <div class="media-content">
+                <p class="title is-4">{{sample.name|split_name}}</p>
+                <audio
+                  controls
+                  src="static/dataset/{{sample.name}}"
+                  Your browser does not support the
+                  <code>audio</code> element.
+                </audio><br>
+                {# <p class="subtitle is-6">@jane_doe</p> #}
+              <span class="button is-primary">Edit</span>
+              <span class="button"> <a href="{{ url_for('public.feature_select', ftype='{{sample.id}}') }}">View Features</a></span>
+              {# <br><br> #}
+              </div>
+            </div>
+              <p><b>Label:</b> {{sample.name|split_name_label|title}}<br><b>Sample Rate:</b> {{sample.sample_rate}}<br><b>Text:</b> {{sample.text}}</p>
+              <b>Last Edited:</b> <time datetime="2018-02-02">12:45 AM - 20 May 2018</time>
+              {# <form> #}
+              {# <p><b>Label:</b> #}
+              {# <div class="select"> #}
+              {#   <select> #}
+              {#     <option>Down</option> #}
+              {#     <option>Up</option> #}
+              {#     <option>Left</option> #}
+              {#     <option>No</option> #}
+              {#     <option>Off</option> #}
+              {#     <option>On</option> #}
+              {#     <option>Right</option> #}
+              {#   </select> #}
+              {# </div><br><b>Sample Rate:<input class="input" type="text" value="441000"></b> <br><b>Text:</b> Emotive Neutral<br> #}
+              {# <b>Last Edited:</b> <time datetime="2018-02-02">12:45 AM - 20 May 2018</time></p> #}
+              {# <div class="field is-grouped is-grouped-left"> #}
+              {#   <p class="control"> #}
+              {#     <a class="button is-primary"> #}
+              {#       Submit #}
+              {#     </a> #}
+              {#   </p> #}
+              {#   <p class="control"> #}
+              {#     <a class="button is-light"> #}
+              {#       Cancel #}
+              {#     </a> #}
+              {#   </p> #}
+              {# </div> #}
+              {# </form> #}
+          </div>
+        </div>
+        <!-- end content -->
+      </div>
+      <button class="modal-close is-large" aria-label="close"></button>
+    </div>
+				{% endfor %}
+			</div>
+			{% endfor %}
+    </section>
+    <footer>
+    </footer>
+    {% endblock %}
+

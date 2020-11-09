@@ -46,7 +46,7 @@ def grid_view():
 
     labels = Label.query.all()
 
-    return render_template('base.html', grid=audio_grid, page=page,
+    return render_template('sample_review.html', grid=audio_grid, page=page,
                            per_page=per_page,
                            pagination=pagination, labels=labels)
 
