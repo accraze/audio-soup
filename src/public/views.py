@@ -61,9 +61,10 @@ def sample_review(file_name):
     return render_template('sample_review.html')
 
 
-@blueprint.route('/feature_select/<ftype>')
-def feature_select(ftype):
-    return render_template('feature_select.html')
+@blueprint.route('/feature_select/<sample_id>')
+def feature_select(sample_id, feature_type='spectral'):
+    sample = AudioFile.query.get(sample_id)
+    return render_template('feature_select.html', sample=sample, feature_type=feature_type)
 
 
 @blueprint.context_processor

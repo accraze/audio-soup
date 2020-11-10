@@ -29,7 +29,8 @@ Feature Selection
                   <div class="content">
                     <h1 class="title is-size-4">Metadata</h1>
                     <p class="is-size-5 subtitle">
-                      <p><b>Filename: </b>0a7cnohash_0.wav<br><b>Label:</b> Down<br><b>Sample Rate:</b> 44100<br><b>Text:</b> Emotive Neutral</p>
+                      {# <p><b>Filename: </b>0a7cnohash_0.wav<br><b>Label:</b> Down<br><b>Sample Rate:</b> 44100<br><b>Text:</b> Emotive Neutral</p> #}
+                      <p><b>Label:</b> {{sample.name|split_name_label|title}}<br><b>Sample Rate:</b> {{sample.sample_rate}}<br><b>Text:</b> {{sample.text}}</p>
                     </p>
                   </div>
                 </div>
@@ -47,11 +48,11 @@ Feature Selection
                     <h1 class="title is-size-4">Waveform</h1>
                     <p class="is-size-5 subtitle">
                       <figure class="image">
-                        <img src="/static/wave.png" alt="audio waveform">
+                        <img src="{{ waveform_image(sample.name) }}" alt="{{sample.id}}-waveform-img">
                       </figure>
                     <audio
                       controls
-                      src="/media/cc0-audio/t-rex-roar.mp3">
+                      src="/static/dataset/{{sample.name}}"
                       Your browser does not support the
                       <code>audio</code> element.
                     </audio><br>
