@@ -95,40 +95,40 @@
                   <code>audio</code> element.
                 </audio><br>
                 {# <p class="subtitle is-6">@jane_doe</p> #}
-              <span class="button is-primary">Edit</span>
+              <span id="modal-card2_{{sample.id}}-edit-btn" class="button is-primary" onclick="toggleMetadataForm(this, {{sample.id}})">Edit</span>
               <span class="button"> <a href="{{ url_for('public.feature_select', sample_id=sample.id) }}">View Features</a></span>
               {# <br><br> #}
               </div>
             </div>
-              <p><b>Label:</b> {{sample.name|split_name_label|title}}<br><b>Sample Rate:</b> {{sample.sample_rate}}<br><b>Text:</b> {{sample.text}}</p>
-              <b>Last Edited:</b> <time datetime="2018-02-02">12:45 AM - 20 May 2018</time>
-              {# <form> #}
-              {# <p><b>Label:</b> #}
-              {# <div class="select"> #}
-              {#   <select> #}
-              {#     <option>Down</option> #}
-              {#     <option>Up</option> #}
-              {#     <option>Left</option> #}
-              {#     <option>No</option> #}
-              {#     <option>Off</option> #}
-              {#     <option>On</option> #}
-              {#     <option>Right</option> #}
-              {#   </select> #}
-              {# </div><br><b>Sample Rate:<input class="input" type="text" value="441000"></b> <br><b>Text:</b> Emotive Neutral<br> #}
-              {# <b>Last Edited:</b> <time datetime="2018-02-02">12:45 AM - 20 May 2018</time></p> #}
-              {# <div class="field is-grouped is-grouped-left"> #}
-              {#   <p class="control"> #}
-              {#     <a class="button is-primary"> #}
-              {#       Submit #}
-              {#     </a> #}
-              {#   </p> #}
-              {#   <p class="control"> #}
-              {#     <a class="button is-light"> #}
-              {#       Cancel #}
-              {#     </a> #}
-              {#   </p> #}
-              {# </div> #}
-              {# </form> #}
+              <p id="modal-card2_{{sample.id}}-metadata"><b>Label:</b> {{sample.name|split_name_label|title}}<br><b>Sample Rate:</b> {{sample.sample_rate}}<br><b>Text:</b> {{sample.text}}</p>
+              {# <b>Last Edited:</b> <time datetime="2018-02-02">12:45 AM - 20 May 2018</time> #}
+              <form id="modal-card2_{{sample.id}}-metadata-form" style="visibility: hidden;">
+              <p><b>Label:</b>
+              <div class="select">
+                <select>
+                  <option>Down</option>
+                  <option>Up</option>
+                  <option>Left</option>
+                  <option>No</option>
+                  <option>Off</option>
+                  <option>On</option>
+                  <option>Right</option>
+                </select>
+              </div><br><b>Sample Rate:<input class="input" type="text" value="441000"></b> <br><b>Text:</b> Emotive Neutral<br>
+              <b>Last Edited:</b> <time datetime="2018-02-02">12:45 AM - 20 May 2018</time></p>
+              <div class="field is-grouped is-grouped-left">
+                <p class="control">
+                  <a class="button is-primary">
+                    Submit
+                  </a>
+                </p>
+                <p class="control">
+                  <a class="button is-light" onclick="cancelMetadataForm({{sample.id}})">
+                    Cancel
+                  </a>
+                </p>
+              </div>
+              </form>
           </div>
         </div>
         <!-- end content -->
@@ -141,5 +141,6 @@
     </section>
     <footer>
     </footer>
+    <script src="../static/sample_review.js"></script>
     {% endblock %}
 
