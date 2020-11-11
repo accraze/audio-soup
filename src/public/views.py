@@ -22,6 +22,7 @@ from matplotlib.figure import Figure
 
 
 from ..models import AudioFile, Label
+from ..extensions import db
 
 
 blueprint = Blueprint("public", __name__, static_folder="../static")
@@ -29,6 +30,15 @@ blueprint = Blueprint("public", __name__, static_folder="../static")
 
 @blueprint.route('/', methods=["GET", "POST"])
 def grid_view():
+    if request.method == "POST":
+        print(request.form)
+        sample = AudioFile.query.get(request.form.get('_id'))
+        sample.label_id = request.form.get('label'),
+        sample.sample_rate = request.form.get('sample_rate'),
+        sample.text = request.form.get('text')
+        db.session.commit()
+        flash('Audio sample metadata was successfully updated.')
+        return redirect(url_for('public.grid_view'))
     label_filter = request.args.get('label_filter', None)
     if not label_filter:
         audio_samples = AudioFile.query.all()
