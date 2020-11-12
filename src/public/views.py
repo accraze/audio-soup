@@ -16,6 +16,7 @@ import librosa
 import matplotlib.pylab as plt
 import io
 import base64
+import numpy as np
 
 from matplotlib.backends.backend_agg import FigureCanvasAgg as FigureCanvas
 from matplotlib.figure import Figure
@@ -31,7 +32,6 @@ blueprint = Blueprint("public", __name__, static_folder="../static")
 @blueprint.route('/', methods=["GET", "POST"])
 def grid_view():
     if request.method == "POST":
-        print(request.form)
         sample = AudioFile.query.get(request.form.get('_id'))
         sample.label_id = request.form.get('label'),
         sample.sample_rate = request.form.get('sample_rate'),
@@ -41,9 +41,9 @@ def grid_view():
         return redirect(url_for('public.grid_view'))
     label_filter = request.args.get('label_filter', None)
     if not label_filter:
-        audio_samples = AudioFile.query.all()
+        audio_samples = AudioFile.query.order_by('id').all()
     else:
-        audio_samples = AudioFile.query.filter(AudioFile.label_id != label_filter).all()
+        audio_samples = AudioFile.query.filter(AudioFile.label_id != label_filter).order_by('id').all()
     page, per_page, offset = get_page_args(page_parameter='page',
                                            per_page_parameter='per_page')
     total = len(audio_samples)
@@ -65,6 +65,29 @@ def get_paginated_samples(samples, offset=0, per_page=9):
     return samples[offset: offset + per_page]
 
 
+def extract_melspectrogram(sample):
+    try:
+      y, sr = librosa.load('static/dataset/'+sample.name)
+    except:
+      y = []
+    S = librosa.feature.melspectrogram(y=y, sr=sr)
+    fig = Figure()
+    #axis = fig.add_subplot(1, 1, 1)
+    #axis.grid()
+    #canvas = FigureCanvas(fig)
+    ax = fig.add_subplot(1,1,1)
+    p = librosa.display.specshow(librosa.power_to_db(S),ax=ax, y_axis='log', x_axis='time')
+    #axis.plot(librosa.power_to_db(S))
+    fig.colorbar(p, format='%+2.0f dB')
+    #plt.axis('off')
+    # Convert plot to PNG image
+    pngImage = io.BytesIO()
+    FigureCanvas(fig).print_png(pngImage)
+    # Encode PNG image to base64 string
+    pngImageB64String = "data:image/png;base64,"
+    pngImageB64String += base64.b64encode(pngImage.getvalue()).decode('utf8')
+    return pngImageB64String
+
 @blueprint.route('/sample/<file_name>')
 def sample_review(file_name):
     print(file_name)
@@ -74,7 +97,12 @@ def sample_review(file_name):
 @blueprint.route('/feature_select/<sample_id>')
 def feature_select(sample_id, feature_type='spectral'):
     sample = AudioFile.query.get(sample_id)
-    return render_template('feature_select.html', sample=sample, feature_type=feature_type)
+    features = {}
+    if feature_type == 'spectral':
+        features['melspec'] =  extract_melspectrogram(sample)
+        #features['tonnetz'] = extract_tonnetz_chroma(sample)
+        #features['power'] = extract_power_contrast(sample)
+    return render_template('feature_select.html', sample=sample, feature_type=feature_type, features=features)
 
 
 @blueprint.context_processor

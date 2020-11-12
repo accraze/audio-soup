@@ -72,8 +72,8 @@ Feature Selection
                   <div class="content">
                     <h1 class="title is-size-4">Mel Spectrogram</h1>
                     <p class="is-size-5 subtitle">
-                      <figure class="modal-button" data-target='modal-image2'>
-                        <img src="/static/melspec.png" alt="mel spectrogram">
+                      <figure class="modal-button" data-target='modal-card2_melspec'>
+                        <img src="{{features.melspec}}" alt="mel spectrogram">
                       </figure>
                     </p>
                     <label class="checkbox">
@@ -172,5 +172,41 @@ Feature Selection
       </div>
       <button class="modal-close is-large" aria-label="close"></button>
     </div>
+    <div id="modal-card2_melspec" class="modal modal-fx-3dSlit">
+      <div class="modal-background"></div>
+      <div class="modal-content is-tiny">
+        <!-- content -->
+        <div class="card">
+          <div class="card-image">
+            <figure class="image is-4by3">
+              <img src="{{features.melspec}}" alt="mel spectrogram">
+            </figure>
+          </div>
+          <div class="card-content">
+            <div class="media">
+              <div class="media-content">
+                <p class="title is-4">Mel Spectrogram</p>
+                {# <audio #}
+                {#   controls #}
+                {#   src="static/dataset/{{sample.name}}" #}
+                {#   Your browser does not support the #}
+                {#   <code>audio</code> element. #}
+                {# </audio><br> #}
+                {# <p class="subtitle is-6">@jane_doe</p> #}
+              {# <span id="modal-card2_{{sample.id}}-edit-btn" class="button is-primary" onclick="toggleMetadataForm(this, {{sample.id}})">Edit</span> #}
+              {# <span class="button"> <a href="{{ url_for('public.feature_select', sample_id=sample.id) }}">View Features</a></span> #}
+              {# <br><br> #}
+              </div>
+            </div>
+              <p id="modal-card2_{{sample.id}}-metadata"><b>Label:</b> {{sample.name|split_name_label|title}}<br><b>Sample Rate:</b> {{sample.sample_rate}}<br><b>Text:</b> {{sample.text}}</p>
+              {# <b>Last Edited:</b> <time datetime="2018-02-02">12:45 AM - 20 May 2018</time> #}
+          </div>
+        </div>
+        <!-- end content -->
+      </div>
+      <button class="modal-close is-large" aria-label="close"></button>
+    </div>
+			</div>
+
 
 {% endblock %}
