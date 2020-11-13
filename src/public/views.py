@@ -112,6 +112,31 @@ def extract_tonnetz_chroma(sample):
     pngImageB64String += base64.b64encode(pngImage.getvalue()).decode('utf8')
     return pngImageB64String
 
+def extract_power_contrast(sample):
+    try:
+      y, sr = librosa.load('static/dataset/'+sample.name)
+    except:
+      y = []
+    S = np.abs(librosa.stft(y))
+    contrast = librosa.feature.spectral_contrast(S=S, sr=sr)
+    fig = Figure()
+    ax = fig.add_subplot(2,1,1)
+    ax.set(title='Power Spectrogram')
+    p = librosa.display.specshow(librosa.amplitude_to_db(S, ref=np.max),ax=ax, y_axis='log')
+    fig.colorbar(p, format='%+2.0f dB')
+    ax.label_outer()
+    ax2 = fig.add_subplot(2,1,2)
+    ax2.set(title='Spectral Contrast', ylabel='Frequency bands')
+    q = librosa.display.specshow(contrast, ax=ax2, x_axis='time')
+    fig.colorbar(q)
+    # Convert plot to PNG image
+    pngImage = io.BytesIO()
+    FigureCanvas(fig).print_png(pngImage)
+    # Encode PNG image to base64 string
+    pngImageB64String = "data:image/png;base64,"
+    pngImageB64String += base64.b64encode(pngImage.getvalue()).decode('utf8')
+    return pngImageB64String
+
 
 @blueprint.route('/sample/<file_name>')
 def sample_review(file_name):
@@ -126,7 +151,7 @@ def feature_select(sample_id, feature_type='spectral'):
     if feature_type == 'spectral':
         features['melspec'] =  extract_melspectrogram(sample)
         features['tonnetz'] = extract_tonnetz_chroma(sample)
-        #features['power'] = extract_power_contrast(sample)
+        features['power'] = extract_power_contrast(sample)
     return render_template('feature_select.html', sample=sample, feature_type=feature_type, features=features)
 
 
