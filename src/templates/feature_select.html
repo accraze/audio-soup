@@ -124,8 +124,9 @@ Feature Selection
                   <div class="content">
                     <h1 class="title is-size-4">Tonal Centroid / Chroma</h1>
                     <p class="is-size-5 subtitle">
-                      <figure class="modal-button" data-target='modal-image2'>
-                        <img src="/static/chromavstonnetz.png" alt="tonal-centroid">
+                      <figure class="modal-button" data-target='modal-card2_tonnetz'>
+                        <img src="{{features.tonnetz}}" alt="tonal centroid & chroma">
+                        {# <img src="/static/chromavstonnetz.png" alt="tonal-centroid"> #}
                       </figure>
                     <label class="checkbox">
                       <input type="checkbox">
@@ -208,5 +209,40 @@ Feature Selection
     </div>
 			</div>
 
+<div id="modal-card2_tonnetz" class="modal modal-fx-3dSlit">
+      <div class="modal-background"></div>
+      <div class="modal-content is-tiny">
+        <!-- content -->
+        <div class="card">
+          <div class="card-image">
+            <figure class="image is-4by3">
+              <img src="{{features.tonnetz}}" alt="tonal centroid vs chroma">
+            </figure>
+          </div>
+          <div class="card-content">
+            <div class="media">
+              <div class="media-content">
+                <p class="title is-4">Tonal Centroid (Tonnetz) / Chroma</p>
+                {# <audio #}
+                {#   controls #}
+                {#   src="static/dataset/{{sample.name}}" #}
+                {#   Your browser does not support the #}
+                {#   <code>audio</code> element. #}
+                {# </audio><br> #}
+                {# <p class="subtitle is-6">@jane_doe</p> #}
+              {# <span id="modal-card2_{{sample.id}}-edit-btn" class="button is-primary" onclick="toggleMetadataForm(this, {{sample.id}})">Edit</span> #}
+              {# <span class="button"> <a href="{{ url_for('public.feature_select', sample_id=sample.id) }}">View Features</a></span> #}
+              {# <br><br> #}
+              </div>
+            </div>
+              <p id="modal-card2_{{sample.id}}-metadata">The tonal features (tonnetz) are computed using the harmonic component of the audio sample. The Chromagram shows where the sound lies within the 12 different pitches classes.</p>
+              {# <b>Last Edited:</b> <time datetime="2018-02-02">12:45 AM - 20 May 2018</time> #}
+          </div>
+        </div>
+        <!-- end content -->
+      </div>
+      <button class="modal-close is-large" aria-label="close"></button>
+    </div>
+			</div>
 
 {% endblock %}
