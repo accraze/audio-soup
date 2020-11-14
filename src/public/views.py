@@ -166,7 +166,7 @@ def utility_processor():
     axis = fig.add_subplot(1, 1, 1)
     axis.grid()
     axis.plot(y)
-    plt.axis('off')
+    #plt.axis('off')
     # Convert plot to PNG image
     pngImage = io.BytesIO()
     FigureCanvas(fig).print_png(pngImage)
