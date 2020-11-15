@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 """Public section, including homepage and signup."""
+
 from flask import (
     Blueprint,
     current_app,
@@ -20,7 +21,6 @@ import numpy as np
 
 from matplotlib.backends.backend_agg import FigureCanvasAgg as FigureCanvas
 from matplotlib.figure import Figure
-
 
 from ..models import AudioFile, Label
 from ..extensions import db
@@ -67,7 +67,7 @@ def get_paginated_samples(samples, offset=0, per_page=9):
 
 def extract_melspectrogram(sample):
     try:
-      y, sr = librosa.load('static/dataset/'+sample.name)
+      y, sr = librosa.load('src/static/dataset/'+sample.name)
     except:
       y = []
     S = librosa.feature.melspectrogram(y=y, sr=sr)
@@ -91,7 +91,7 @@ def extract_melspectrogram(sample):
 
 def extract_tonnetz_chroma(sample):
     try:
-      y, sr = librosa.load('static/dataset/'+sample.name)
+      y, sr = librosa.load('/src/static/dataset/'+sample.name)
     except:
       y = []
     y = librosa.effects.harmonic(y)
@@ -114,7 +114,7 @@ def extract_tonnetz_chroma(sample):
 
 def extract_power_contrast(sample):
     try:
-      y, sr = librosa.load('static/dataset/'+sample.name)
+      y, sr = librosa.load('/src/static/dataset/'+sample.name)
     except:
       y = []
     S = np.abs(librosa.stft(y))
@@ -159,7 +159,7 @@ def feature_select(sample_id, feature_type='spectral'):
 def utility_processor():
   def waveform_image(audiofile):
     try:
-      y, sr = librosa.load('static/dataset/'+audiofile)
+      y, sr = librosa.load('/src/static/dataset/'+audiofile)
     except:
       y = []
     fig = Figure()

@@ -1,12 +1,13 @@
 from flask import Flask, escape, request, render_template
 import os
 
-from .extensions import db
+from .extensions import db, migrate
 from .filters import split_name, split_name_label
 from .public import views
 
 def register_extensions(app):
     db.init_app(app)
+    migrate.init_app(app, db)
 
 def create_app(config_object="src.config"):
     app = Flask(__name__)
@@ -27,5 +28,3 @@ def register_filters(app):
     app.jinja_env.filters['split_name_label'] = split_name_label
 
 app = create_app()
-
-
