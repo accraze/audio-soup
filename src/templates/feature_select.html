@@ -48,7 +48,7 @@ Feature Selection
                     <h1 class="title is-size-4">Metadata</h1>
                     <p class="is-size-5 subtitle">
                       {# <p><b>Filename: </b>0a7cnohash_0.wav<br><b>Label:</b> Down<br><b>Sample Rate:</b> 44100<br><b>Text:</b> Emotive Neutral</p> #}
-                      <p><b>Label:</b> {{sample.name|split_name_label|title}}<br><b>Sample Rate:</b> {{sample.sample_rate}}<br><b>Text:</b> {{sample.text}}</p>
+											<p><b>Label:</b> {{sample.name|split_name_label|title}}<br><b>Sample Rate:</b> {{sample.sample_rate}}<br><b>Text:</b> {% if sample.text and 'data' in sample.text %}{{sample.text.data}}{% else %}(None){% endif %}</p>
                     </p>
                   </div>
                 </div>

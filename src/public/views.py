@@ -35,7 +35,9 @@ def grid_view():
         sample = AudioFile.query.get(request.form.get('_id'))
         sample.label_id = request.form.get('label'),
         sample.sample_rate = request.form.get('sample_rate'),
-        sample.text = request.form.get('text')
+        sample.text = {
+                'data': request.form.get('text')
+        }
         db.session.commit()
         flash('Audio sample metadata was successfully updated.')
         return redirect(url_for('public.grid_view'))

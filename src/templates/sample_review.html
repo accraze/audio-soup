@@ -81,7 +81,7 @@
             <div class="card-content">
               <div class="content">
                 <h4>{{sample.name|split_name}}</h4>
-								<p>Label: {{sample.name|split_name_label|title}}<br>Sample Rate: {{sample.sample_rate}}<br>Text: Emotive Neutral</p>
+								<p>Label: {{sample.name|split_name_label|title}}<br>Sample Rate: {{sample.sample_rate}}<br>Text: {% if sample.text and 'data' in sample.text %} {{sample.text.data}}{% else %} (None){% endif %}</p>
                 <span class="button is-link modal-button" data-target="modal-card2_{{sample.id}}">Review</span>
               </div>
             </div>
@@ -113,7 +113,7 @@
               {# <br><br> #}
               </div>
             </div>
-              <p id="modal-card2_{{sample.id}}-metadata"><b>Label:</b> {{sample.name|split_name_label|title}}<br><b>Sample Rate:</b> {{sample.sample_rate}}<br><b>Text:</b> {{sample.text}}</p>
+						<p id="modal-card2_{{sample.id}}-metadata"><b>Label:</b> {{sample.name|split_name_label|title}}<br><b>Sample Rate:</b> {{sample.sample_rate}}<br><b>Text:</b> {% if sample.text and 'data' in sample.text %}{{sample.text.data}}{% endif %}</p>
               {# <b>Last Edited:</b> <time datetime="2018-02-02">12:45 AM - 20 May 2018</time> #}
               <form id="modal-card2_{{sample.id}}-metadata-form" style="visibility: hidden;" method="post" action="">
               <input value="{{sample.id}}" name="_id" style="display:none;">
@@ -124,7 +124,7 @@
                   <option value='{{label.id}}' {% if label.id == sample.label_id %} selected {%endif%}>{{label.name|title}}</option>
                   {% endfor %}
                 </select>
-              </div><br><b>Sample Rate:<input class="input" type="text" value="{{sample.sample_rate}}" name="sample_rate"></b> <br><b>Text:</b><input class="input" type="text" name="text" value='{{sample.text}}'></input><br>
+							</div><br><b>Sample Rate:<input class="input" type="text" value="{{sample.sample_rate}}" name="sample_rate"></b> <br><b>Text:</b><input class="input" type="text" name="text" {% if  sample.text and 'data' in sample.text %} value='{{sample.text.data}}' {% endif %}></input><br>
               {# <b>Last Edited:</b> <time datetime="2018-02-02">12:45 AM - 20 May 2018</time></p> #}
               <div class="field is-grouped is-grouped-left">
                 <p class="control">
