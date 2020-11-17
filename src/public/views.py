@@ -43,7 +43,7 @@ def grid_view():
     if not label_filter:
         audio_samples = AudioFile.query.order_by('id').all()
     else:
-        audio_samples = AudioFile.query.filter(AudioFile.label_id != label_filter).order_by('id').all()
+        audio_samples = AudioFile.query.filter(AudioFile.label_id == label_filter).order_by('id').all()
     page, per_page, offset = get_page_args(page_parameter='page',
                                            per_page_parameter='per_page')
     total = len(audio_samples)
