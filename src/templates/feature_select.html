@@ -37,23 +37,35 @@ Feature Selection
         <div class="container">
           <div class="columns is-multiline">
             <div class="column is-one-third">
-              <article class="notification media has-background-white">
+              <article class="notification has-background-white media">
                 <figure class="media-left">
-                  <span class="icon">
-                    <i class="has-text-warning fa fa-columns fa-lg"></i>
+                  <span class="icon has-text-grey">
+                    <i class="fa fa-lg fa-cogs"></i>
                   </span>
                 </figure>
                 <div class="media-content">
                   <div class="content">
-                    <h1 class="title is-size-4">Metadata</h1>
+                    <h1 class="title is-size-4">Feature Settings</h1>
                     <p class="is-size-5 subtitle">
-                      {# <p><b>Filename: </b>0a7cnohash_0.wav<br><b>Label:</b> Down<br><b>Sample Rate:</b> 44100<br><b>Text:</b> Emotive Neutral</p> #}
-											<p><b>Label:</b> {{sample.name|split_name_label|title}}<br><b>Sample Rate:</b> {{sample.sample_rate}}<br><b>Text:</b> {% if sample.text and 'data' in sample.text %}{{sample.text.data}}{% else %}(None){% endif %}</p>
+                       <p>Select the type of features you are most interested in.</p>
+                       <div class="buttons has-addons">
+                          <button class="button is-success is-selected">Spectral</button>
+                          <button class="button">Rhythmic</button>
+                          <button class="button">Deltas</button>
+                        </div>
+                       <p>Export selected features as:</p>
+                       <div class="buttons has-addons">
+                          <button class="button is-success is-selected">JSON</button>
+                          <button class="button">CSV</button>
+                          <button class="button">Plain Text</button>
+                        </div>
+
                     </p>
                   </div>
                 </div>
               </article>
             </div>
+
             <div class="column is-one-third">
               <article class="notification has-background-white media">
                 <figure class="media-left">
@@ -103,34 +115,24 @@ Feature Selection
               </article>
             </div>
             <div class="column is-one-third">
-              <article class="notification has-background-white media">
+              <article class="notification media has-background-white">
                 <figure class="media-left">
-                  <span class="icon has-text-grey">
-                    <i class="fa fa-lg fa-cogs"></i>
+                  <span class="icon">
+                    <i class="has-text-warning fa fa-columns fa-lg"></i>
                   </span>
                 </figure>
                 <div class="media-content">
                   <div class="content">
-                    <h1 class="title is-size-4">Feature Settings</h1>
+                    <h1 class="title is-size-4">Metadata</h1>
                     <p class="is-size-5 subtitle">
-                       <p>Select the type of features you are most interested in.</p>
-                       <div class="buttons has-addons">
-                          <button class="button is-success is-selected">Spectral</button>
-                          <button class="button">Rhythmic</button>
-                          <button class="button">Deltas</button>
-                        </div>
-                       <p>Export selected features as:</p>
-                       <div class="buttons has-addons">
-                          <button class="button is-success is-selected">JSON</button>
-                          <button class="button">CSV</button>
-                          <button class="button">Plain Text</button>
-                        </div>
-
+                      {# <p><b>Filename: </b>0a7cnohash_0.wav<br><b>Label:</b> Down<br><b>Sample Rate:</b> 44100<br><b>Text:</b> Emotive Neutral</p> #}
+											<p><b>Label:</b> {{sample.name|split_name_label|title}}<br><b>Sample Rate:</b> {{sample.sample_rate}}<br><b>Text:</b> {% if sample.text and 'data' in sample.text %}{{sample.text.data}}{% else %}(None){% endif %}</p>
                     </p>
                   </div>
                 </div>
               </article>
             </div>
+
             <div class="column is-one-third">
               <article class="notification has-background-white media">
                 <figure class="media-left">
