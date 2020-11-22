@@ -49,8 +49,8 @@ Feature Selection
                     <p class="is-size-5 subtitle">
                        <p>Select the type of features you are most interested in.</p>
                        <div class="buttons has-addons">
-                          <button class="button is-success is-selected">Spectral</button>
-                          <button class="button">Rhythmic</button>
+												 <button class="button  {% if feature_type == 'spectral' %}is-success is-selected {% endif %}">Spectral</button>
+												 <button class="button {% if feature_type == 'rhythmic' %} is-success is-selected {% endif %}">Rhythmic</button>
                           <button class="button">Deltas</button>
                         </div>
                        <p>Export selected features as:</p>
@@ -99,6 +99,7 @@ Feature Selection
                   </span>
                 </figure>
                 <div class="media-content">
+                  {% if feature_type == 'spectral' %}
                   <div class="content">
                     <h1 class="title is-size-4">Mel Spectrogram</h1>
                     <p class="is-size-5 subtitle">
@@ -111,6 +112,20 @@ Feature Selection
                       Select this feature
                     </label>
                   </div>
+                  {% elif feature_type == 'rhythmic' %}
+                   <div class="content">
+                    <h1 class="title is-size-4">Tempogram</h1>
+                    <p class="is-size-5 subtitle">
+                      <figure class="modal-button" data-target='modal-card2_tempogram'>
+                        <img src="{{features.tempogram}}" alt="tempogram">
+                      </figure>
+                    </p>
+                    <label class="checkbox">
+                      <input type="checkbox">
+                      Select this feature
+                    </label>
+                  </div>
+                  {% endif %}
                 </div>
               </article>
             </div>
@@ -141,6 +156,7 @@ Feature Selection
                   </span>
                 </figure>
                 <div class="media-content">
+               {% if feature_type == 'spectral' %}
                   <div class="content">
                     <h1 class="title is-size-4">Tonal Centroid / Chroma</h1>
                     <p class="is-size-5 subtitle">
@@ -154,6 +170,20 @@ Feature Selection
                     </label>
                     </p>
                   </div>
+               {% elif feature_type == 'rhythmic' %}
+                  <div class="content">
+                    <h1 class="title is-size-4">Fourier Tempogram</h1>
+                    <p class="is-size-5 subtitle">
+                      <figure class="modal-button" data-target='modal-card2_f-tempogram'>
+                        <img src="{{features.f_tempogram}}" alt="fourier-tempogram">
+                      </figure>
+                    <label class="checkbox">
+                      <input type="checkbox">
+                      Select this feature
+                    </label>
+                    </p>
+                  </div>
+               {% endif %}
                 </div>
               </article>
             </div>
@@ -165,6 +195,7 @@ Feature Selection
                   </span>
                 </figure>
                 <div class="media-content">
+                  {% if feature_type == 'spectral' %}
                   <div class="content">
                     <h1 class="title is-size-4">Power/Contrast</h1>
                     <p class="is-size-5 subtitle">
@@ -177,6 +208,8 @@ Feature Selection
                     </label>
                   </p>
                   </div>
+                {% elif feature_type == 'rhythmic' %}
+                {% endif %}
                 </div>
               </article>
             </div>
@@ -301,6 +334,75 @@ Feature Selection
       </div>
       <button class="modal-close is-large" aria-label="close"></button>
     </div>
-			</div>
+	</div>
+
+<div id="modal-card2_tempogram" class="modal modal-fx-3dSlit">
+      <div class="modal-background"></div>
+      <div class="modal-content is-tiny">
+        <!-- content -->
+        <div class="card">
+          <div class="card-image">
+            <figure class="image is-4by3">
+              <img src="{{features.tempogram}}" alt="tempogram">
+            </figure>
+          </div>
+          <div class="card-content">
+            <div class="media">
+              <div class="media-content">
+                <p class="title is-4">Tempogram</p>
+                {# <audio #}
+                {#   controls #}
+                {#   src="static/dataset/{{sample.name}}" #}
+                {#   Your browser does not support the #}
+                {#   <code>audio</code> element. #}
+                {# </audio><br> #}
+                {# <p class="subtitle is-6">@jane_doe</p> #}
+              {# <span id="modal-card2_{{sample.id}}-edit-btn" class="button is-primary" onclick="toggleMetadataForm(this, {{sample.id}})">Edit</span> #}
+              {# <span class="button"> <a href="{{ url_for('public.feature_select', sample_id=sample.id) }}">View Features</a></span> #}
+              {# <br><br> #}
+              </div>
+            </div>
+              <p id="modal-card2_{{sample.id}}-tempogram"><b>This shows local autocorrelation of the onset strength envelope.</p>
+          </div>
+        </div>
+        <!-- end content -->
+      </div>
+      <button class="modal-close is-large" aria-label="close"></button>
+    </div>
+
+<div id="modal-card2_f-tempogram" class="modal modal-fx-3dSlit">
+      <div class="modal-background"></div>
+      <div class="modal-content is-tiny">
+        <!-- content -->
+        <div class="card">
+          <div class="card-image">
+            <figure class="image is-4by3">
+              <img src="{{features.f_tempogram}}" alt="tempogram">
+            </figure>
+          </div>
+          <div class="card-content">
+            <div class="media">
+              <div class="media-content">
+                <p class="title is-4">Fourier Tempogram</p>
+                {# <audio #}
+                {#   controls #}
+                {#   src="static/dataset/{{sample.name}}" #}
+                {#   Your browser does not support the #}
+                {#   <code>audio</code> element. #}
+                {# </audio><br> #}
+                {# <p class="subtitle is-6">@jane_doe</p> #}
+              {# <span id="modal-card2_{{sample.id}}-edit-btn" class="button is-primary" onclick="toggleMetadataForm(this, {{sample.id}})">Edit</span> #}
+              {# <span class="button"> <a href="{{ url_for('public.feature_select', sample_id=sample.id) }}">View Features</a></span> #}
+              {# <br><br> #}
+              </div>
+            </div>
+						<p id="modal-card2_{{sample.id}}-f_tempogram"><b>This shows the short-time Fourier transform of the onset strength envelope.</p>
+          </div>
+        </div>
+        <!-- end content -->
+      </div>
+      <button class="modal-close is-large" aria-label="close"></button>
+    </div>
+
 
 {% endblock %}

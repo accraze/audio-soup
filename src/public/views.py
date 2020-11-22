@@ -139,6 +139,64 @@ def extract_power_contrast(sample):
     pngImageB64String += base64.b64encode(pngImage.getvalue()).decode('utf8')
     return pngImageB64String
 
+def extract_tempogram(sample):
+    try:
+      y, sr = librosa.load('/src/static/dataset/'+sample.name)
+    except:
+      y = []
+    hop_length = 512
+    oenv = librosa.onset.onset_strength(y=y, sr=sr, hop_length=hop_length)
+    tempogram = librosa.feature.tempogram(onset_envelope=oenv, sr=sr,
+                                                    hop_length=hop_length)
+    # S = np.abs(librosa.stft(y))
+    # contrast = librosa.feature.spectral_contrast(S=S, sr=sr)
+    fig = Figure()
+    ax = fig.add_subplot(2,1,1)
+    times = librosa.times_like(oenv, sr=sr, hop_length=hop_length)
+    ax.plot(times,oenv, label='Onset strength')
+    ax.label_outer()
+    ax2 = fig.add_subplot(2,1,2)
+    ax2.set(title='Tempogram')
+    q = librosa.display.specshow(tempogram, sr=sr, hop_length=hop_length,
+                                     x_axis='time', y_axis='tempo', cmap='magma',
+                                                              ax=ax2)
+    # Convert plot to PNG image
+    pngImage = io.BytesIO()
+    FigureCanvas(fig).print_png(pngImage)
+    # Encode PNG image to base64 string
+    pngImageB64String = "data:image/png;base64,"
+    pngImageB64String += base64.b64encode(pngImage.getvalue()).decode('utf8')
+    return pngImageB64String
+
+
+def extract_fourier_tempogram(sample):
+    try:
+      y, sr = librosa.load('/src/static/dataset/'+sample.name)
+    except:
+      y = []
+    hop_length = 512
+    oenv = librosa.onset.onset_strength(y=y, sr=sr, hop_length=hop_length)
+    tempogram = librosa.feature.fourier_tempogram(onset_envelope=oenv, sr=sr,
+                                                    hop_length=hop_length)
+    # S = np.abs(librosa.stft(y))
+    # contrast = librosa.feature.spectral_contrast(S=S, sr=sr)
+    fig = Figure()
+    ax = fig.add_subplot(2,1,1)
+    times = librosa.times_like(oenv, sr=sr, hop_length=hop_length)
+    ax.plot(times,oenv, label='Onset strength')
+    ax.label_outer()
+    ax2 = fig.add_subplot(2,1,2)
+    ax2.set(title='Tempogram')
+    q = librosa.display.specshow(tempogram, sr=sr, hop_length=hop_length,
+                                     x_axis='time', y_axis='tempo', cmap='magma',
+                                                              ax=ax2)
+    # Convert plot to PNG image
+    pngImage = io.BytesIO()
+    FigureCanvas(fig).print_png(pngImage)
+    # Encode PNG image to base64 string
+    pngImageB64String = "data:image/png;base64,"
+    pngImageB64String += base64.b64encode(pngImage.getvalue()).decode('utf8')
+    return pngImageB64String
 
 @blueprint.route('/sample/<file_name>')
 def sample_review(file_name):
@@ -154,6 +212,9 @@ def feature_select(sample_id, feature_type='spectral'):
         features['melspec'] =  extract_melspectrogram(sample)
         features['tonnetz'] = extract_tonnetz_chroma(sample)
         features['power'] = extract_power_contrast(sample)
+    if feature_type == 'rhythmic':
+        features['tempogram'] = extract_tempogram(sample)
+        features['f_tempogram'] = extract_fourier_tempogram(sample)
     return render_template('feature_select.html', sample=sample, feature_type=feature_type, features=features)
 
 
