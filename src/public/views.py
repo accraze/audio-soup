@@ -205,7 +205,8 @@ def sample_review(file_name):
 
 
 @blueprint.route('/feature_select/<sample_id>')
-def feature_select(sample_id, feature_type='spectral'):
+def feature_select(sample_id):
+    feature_type = request.args.get('feature_type', 'spectral')
     sample = AudioFile.query.get(sample_id)
     features = {}
     if feature_type == 'spectral':

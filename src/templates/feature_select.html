@@ -49,8 +49,8 @@ Feature Selection
                     <p class="is-size-5 subtitle">
                        <p>Select the type of features you are most interested in.</p>
                        <div class="buttons has-addons">
-												 <button class="button  {% if feature_type == 'spectral' %}is-success is-selected {% endif %}">Spectral</button>
-												 <button class="button {% if feature_type == 'rhythmic' %} is-success is-selected {% endif %}">Rhythmic</button>
+												 <button class="button  {% if feature_type == 'spectral' %}is-success is-selected "{% else %}" onclick='loadSpectralFeatures()' {% endif %}>Spectral</button>
+												 <button class="button {% if feature_type == 'rhythmic' %} is-success is-selected "{% else %}" onclick='loadRhythmicFeatures()'{% endif %}>Rhythmic</button>
                           <button class="button">Deltas</button>
                         </div>
                        <p>Export selected features as:</p>
@@ -404,5 +404,6 @@ Feature Selection
       <button class="modal-close is-large" aria-label="close"></button>
     </div>
 
+<script src="../static/feature_select.js"></script>
 
 {% endblock %}
