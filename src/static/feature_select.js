@@ -14,6 +14,8 @@ function loadRhythmicFeatures(url) {
 }
 
 function loadDeltaFeatures(url) {
-  location.href = url+'?feature_type=deltas';
+	url= location.href+'?feature_type=deltas';
+	location.href = url;
+
 }
 

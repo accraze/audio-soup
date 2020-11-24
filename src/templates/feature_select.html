@@ -51,7 +51,7 @@ Feature Selection
                        <div class="buttons has-addons">
 												 <button class="button  {% if feature_type == 'spectral' %}is-success is-selected "{% else %}" onclick='loadSpectralFeatures()' {% endif %}>Spectral</button>
 												 <button class="button {% if feature_type == 'rhythmic' %} is-success is-selected "{% else %}" onclick='loadRhythmicFeatures()'{% endif %}>Rhythmic</button>
-                          <button class="button">Deltas</button>
+                         <button class="button {% if feature_type == 'deltas' %} is-success is-selected "{% else %}" onclick='loadDeltaFeatures()'{% endif %}>Deltas</button>
                         </div>
                        <p>Export selected features as:</p>
                        <div class="buttons has-addons">
@@ -125,6 +125,19 @@ Feature Selection
                       Select this feature
                     </label>
                   </div>
+                  {% elif feature_type == 'deltas' %}
+                  <div class="content">
+                    <h1 class="title is-size-4">MFCC Deltas</h1>
+                    <p class="is-size-5 subtitle">
+                      <figure class="modal-button" data-target='modal-card2_mfccs'>
+                        <img src="{{features.mfccs}}" alt="MFCC Deltas">
+                      </figure>
+                    <label class="checkbox">
+                      <input type="checkbox">
+                      Select this feature
+                    </label>
+                    </p>
+                  </div>
                   {% endif %}
                 </div>
               </article>
@@ -183,11 +196,25 @@ Feature Selection
                     </label>
                     </p>
                   </div>
+                  {% elif feature_type == 'deltas' %}
+                  <div class="content">
+                    <h1 class="title is-size-4">Stack Memory</h1>
+                    <p class="is-size-5 subtitle">
+                      <figure class="modal-button" data-target='modal-card2_stackmemory'>
+                        <img src="{{features.stack}}" alt="stack memory">
+                      </figure>
+                    <label class="checkbox">
+                      <input type="checkbox">
+                      Select this feature
+                    </label>
+                    </p>
+                  </div>
+
                {% endif %}
                 </div>
               </article>
             </div>
-            <div class="column is-one-third" {% if feature_type == 'rhythmic' %} style="display:none;"{% endif %}>
+            <div class="column is-one-third" {% if feature_type == 'rhythmic'  or feature_type =='deltas' %} style="display:none;"{% endif %}>
               <article class="notification has-background-white media">
                 <figure class="media-left">
                   <span class="icon has-text-danger">
@@ -208,7 +235,7 @@ Feature Selection
                     </label>
                   </p>
                   </div>
-                {% elif feature_type == 'rhythmic' %}
+                {% elif feature_type == 'rhythmic' or feature_type == 'deltas' %}
                 {% endif %}
                 </div>
               </article>
@@ -397,6 +424,74 @@ Feature Selection
               </div>
             </div>
 						<p id="modal-card2_{{sample.id}}-f_tempogram"><b>This shows the short-time Fourier transform of the onset strength envelope.</p>
+          </div>
+        </div>
+        <!-- end content -->
+      </div>
+      <button class="modal-close is-large" aria-label="close"></button>
+    </div>
+
+<div id="modal-card2_mfccs" class="modal modal-fx-3dSlit">
+      <div class="modal-background"></div>
+      <div class="modal-content is-tiny">
+        <!-- content -->
+        <div class="card">
+          <div class="card-image">
+            <figure class="image is-4by3">
+              <img src="{{features.mfccs}}" alt="MFCC Deltas">
+            </figure>
+          </div>
+          <div class="card-content">
+            <div class="media">
+              <div class="media-content">
+                <p class="title is-4">MFCC Deltas</p>
+                {# <audio #}
+                {#   controls #}
+                {#   src="static/dataset/{{sample.name}}" #}
+                {#   Your browser does not support the #}
+                {#   <code>audio</code> element. #}
+                {# </audio><br> #}
+                {# <p class="subtitle is-6">@jane_doe</p> #}
+              {# <span id="modal-card2_{{sample.id}}-edit-btn" class="button is-primary" onclick="toggleMetadataForm(this, {{sample.id}})">Edit</span> #}
+              {# <span class="button"> <a href="{{ url_for('public.feature_select', sample_id=sample.id) }}">View Features</a></span> #}
+              {# <br><br> #}
+              </div>
+            </div>
+						<p id="modal-card2_{{sample.id}}-mfccs-data"><b>Local estimate of the derivative of the input data along the selected axis. Delta features are computed Savitsky-Golay filtering..</p>
+          </div>
+        </div>
+        <!-- end content -->
+      </div>
+      <button class="modal-close is-large" aria-label="close"></button>
+    </div>
+
+<div id="modal-card2_stackmemory" class="modal modal-fx-3dSlit">
+      <div class="modal-background"></div>
+      <div class="modal-content is-tiny">
+        <!-- content -->
+        <div class="card">
+          <div class="card-image">
+            <figure class="image is-4by3">
+              <img src="{{features.stack}}" alt="Stack Memory">
+            </figure>
+          </div>
+          <div class="card-content">
+            <div class="media">
+              <div class="media-content">
+                <p class="title is-4">Stack Memory</p>
+                {# <audio #}
+                {#   controls #}
+                {#   src="static/dataset/{{sample.name}}" #}
+                {#   Your browser does not support the #}
+                {#   <code>audio</code> element. #}
+                {# </audio><br> #}
+                {# <p class="subtitle is-6">@jane_doe</p> #}
+              {# <span id="modal-card2_{{sample.id}}-edit-btn" class="button is-primary" onclick="toggleMetadataForm(this, {{sample.id}})">Edit</span> #}
+              {# <span class="button"> <a href="{{ url_for('public.feature_select', sample_id=sample.id) }}">View Features</a></span> #}
+              {# <br><br> #}
+              </div>
+            </div>
+						<p id="modal-card2_{{sample.id}}-mfccs-data"><b>Short-term history embedding: vertically concatenate a data vector or matrix with delayed copies of itself.</p>
           </div>
         </div>
         <!-- end content -->

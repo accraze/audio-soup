@@ -198,6 +198,68 @@ def extract_fourier_tempogram(sample):
     pngImageB64String += base64.b64encode(pngImage.getvalue()).decode('utf8')
     return pngImageB64String
 
+
+def extract_mfcc_delta(sample):
+    try:
+      y, sr = librosa.load('/src/static/dataset/'+sample.name)
+    except:
+      y = []
+    mfcc = librosa.feature.mfcc(y=y, sr=sr)
+    mfcc_delta = librosa.feature.delta(mfcc)
+    mfcc_delta2 = librosa.feature.delta(mfcc, order=2)
+    # S = np.abs(librosa.stft(y))
+    # contrast = librosa.feature.spectral_contrast(S=S, sr=sr)
+    fig = Figure()
+    ax = fig.add_subplot(3,1,1)
+    ax.set(title='MFCC')
+    img1 = librosa.display.specshow(mfcc, ax=ax, x_axis='time')
+    ax.label_outer()
+    fig.colorbar(img1)
+    ax2 = fig.add_subplot(3,1,2)
+    img2 = librosa.display.specshow(mfcc_delta, ax=ax2, x_axis='time')
+    ax2.set(title=r'MFCC-$\Delta$')
+    fig.colorbar(img2)
+    ax3 = fig.add_subplot(3,1,3)
+    img3 = librosa.display.specshow(mfcc_delta2, ax=ax3, x_axis='time')
+    ax3.set(title=r'MFCC-$\Delta^2$')
+    fig.colorbar(img3)
+    # Convert plot to PNG image
+    pngImage = io.BytesIO()
+    FigureCanvas(fig).print_png(pngImage)
+    # Encode PNG image to base64 string
+    pngImageB64String = "data:image/png;base64,"
+    pngImageB64String += base64.b64encode(pngImage.getvalue()).decode('utf8')
+    return pngImageB64String
+
+def extract_stack_delta(sample):
+    try:
+      y, sr = librosa.load('/src/static/dataset/'+sample.name)
+    except:
+      y = []
+    chroma = librosa.feature.chroma_stft(y=y, sr=sr)
+    tempo, beats = librosa.beat.beat_track(y=y, sr=sr, hop_length=512)
+    beats = librosa.util.fix_frames(beats, x_min=0, x_max=chroma.shape[1])
+    chroma_sync = librosa.util.sync(chroma, beats)
+    chroma_lag = librosa.feature.stack_memory(chroma_sync, n_steps=3,
+                                                      mode='edge')
+    # S = np.abs(librosa.stft(y))
+    # contrast = librosa.feature.spectral_contrast(S=S, sr=sr)
+    fig = Figure()
+    ax = fig.add_subplot(1,1,1)
+    ax.set(title='Time-lagged chroma')
+    beat_times = librosa.frames_to_time(beats, sr=sr, hop_length=512)
+    librosa.display.specshow(chroma_lag, y_axis='chroma', x_axis='time',
+                                     x_coords=beat_times, ax=ax)
+    ax.label_outer()
+    # Convert plot to PNG image
+    pngImage = io.BytesIO()
+    FigureCanvas(fig).print_png(pngImage)
+    # Encode PNG image to base64 string
+    pngImageB64String = "data:image/png;base64,"
+    pngImageB64String += base64.b64encode(pngImage.getvalue()).decode('utf8')
+    return pngImageB64String
+
+
 @blueprint.route('/sample/<file_name>')
 def sample_review(file_name):
     print(file_name)
@@ -216,6 +278,10 @@ def feature_select(sample_id):
     if feature_type == 'rhythmic':
         features['tempogram'] = extract_tempogram(sample)
         features['f_tempogram'] = extract_fourier_tempogram(sample)
+    if feature_type == 'deltas':
+        features['mfccs'] = extract_mfcc_delta(sample)
+        features['stack'] = extract_stack_delta(sample)
+
     return render_template('feature_select.html', sample=sample, feature_type=feature_type, features=features)
 
 
