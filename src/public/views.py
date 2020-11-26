@@ -318,8 +318,8 @@ def _extract_feature(key):
         return _extract_mel_spectograms()
     if key == 'tonnetz':
         return _extract_tonnetz()
-    if key == 'power':
-        return _extract_power()
+    if key == 'power-contrast':
+        return _extract_power_contrast()
     if key == 'tempogram':
         return _extract_tempo()
     if key == 'fourier_tempogram':
@@ -354,7 +354,7 @@ def _extract_tonnetz():
     return features
 
 
-def _extract_power():
+def _extract_power_contrast():
     features = {'label': [], 'contrast': []}
     audio_files = AudioFile.query.order_by('id').all()
     for af in audio_files:
@@ -363,6 +363,7 @@ def _extract_power():
             y, sr = librosa.load('src/static/dataset/'+af.name)
         except:
             y = []
+        S = np.abs(librosa.stft(y))
         features['contrast'].append(librosa.feature.spectral_contrast(S=S, sr=sr))
     return features
 
