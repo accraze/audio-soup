@@ -305,6 +305,9 @@ def default(obj):
             return obj.tolist()
         else:
             return obj.item()
+    if isinstance(obj, complex):
+        return "__" + str(obj)
+
     raise TypeError('Unknown type:', type(obj))
 
 def _extract_features(export_keys):
@@ -321,9 +324,9 @@ def _extract_feature(key):
     if key == 'power-contrast':
         return _extract_power_contrast()
     if key == 'tempogram':
-        return _extract_tempo()
-    if key == 'fourier_tempogram':
-        return _extract_fourier_tempo()
+        return _extract_tempogram()
+    if key == 'fourier-tempogram':
+        return _extract_fourier_tempogram()
     if key == 'mfcc-deltas':
         return _extract_mfcc_delta()
     if key == 'stack':
