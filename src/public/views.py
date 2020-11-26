@@ -425,7 +425,7 @@ def _extract_stack():
     for af in audio_files:
         features['label'].append(af.label_id)
         try:
-          y, sr = librosa.load('/src/static/dataset/'+sample.name)
+          y, sr = librosa.load('/src/static/dataset/'+af.name)
         except:
           y = []
         chroma = librosa.feature.chroma_stft(y=y, sr=sr)
