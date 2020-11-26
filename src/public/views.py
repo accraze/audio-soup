@@ -8,6 +8,7 @@ from flask import (
     redirect,
     render_template,
     request,
+    Response,
     url_for,
 )
 from flask_paginate import Pagination, get_page_args
@@ -16,6 +17,8 @@ import librosa.display
 import librosa
 import matplotlib.pylab as plt
 import io
+import json
+import datetime
 import base64
 import numpy as np
 
@@ -283,6 +286,152 @@ def feature_select(sample_id):
         features['stack'] = extract_stack_delta(sample)
 
     return render_template('feature_select.html', sample=sample, feature_type=feature_type, features=features)
+
+@blueprint.route('/feature_select/export', methods=['POST'])
+def export_data():
+    form_data = request.form
+    export_keys = [k for k in form_data.keys() if form_data[k]]
+    res = _extract_features(export_keys)
+    fname = 'features-{}.json'.format(datetime.datetime.now())
+    print(fname)
+    return Response(json.dumps(res, default=default),
+                    mimetype="application/json",
+                    headers={"Content-disposition":
+                    "attachment; filename={}".format(fname)})
+
+def default(obj):
+    if type(obj).__module__ == np.__name__:
+        if isinstance(obj, np.ndarray):
+            return obj.tolist()
+        else:
+            return obj.item()
+    raise TypeError('Unknown type:', type(obj))
+
+def _extract_features(export_keys):
+    res = {}
+    for key in export_keys:
+        res[key] = _extract_feature(key)
+    return res
+
+def _extract_feature(key):
+    if key == 'mel-spectrogram':
+        return _extract_mel_spectograms()
+    if key == 'tonnetz':
+        return _extract_tonnetz()
+    if key == 'power':
+        return _extract_power()
+    if key == 'tempogram':
+        return _extract_tempo()
+    if key == 'fourier_tempogram':
+        return _extract_fourier_tempo()
+    if key == 'mfcc-deltas':
+        return _extract_mfcc_delta()
+    if key == 'stack':
+        return _extract_stack()
+
+def _extract_mel_spectograms():
+    features = {'label': [], 'melspec': []}
+    audio_files = AudioFile.query.order_by('id').all()
+    for af in audio_files:
+        features['label'].append(af.label_id)
+        try:
+            y, sr = librosa.load('src/static/dataset/'+af.name)
+        except:
+            y = []
+        features['melspec'].append(librosa.feature.melspectrogram(y=y, sr=sr))
+    return features
+
+def _extract_tonnetz():
+    features = {'label': [], 'tonnetz': []}
+    audio_files = AudioFile.query.order_by('id').all()
+    for af in audio_files:
+        features['label'].append(af.label_id)
+        try:
+            y, sr = librosa.load('src/static/dataset/'+af.name)
+        except:
+            y = []
+        features['tonnetz'].append(librosa.feature.tonnetz(y=y, sr=sr))
+    return features
+
+
+def _extract_power():
+    features = {'label': [], 'contrast': []}
+    audio_files = AudioFile.query.order_by('id').all()
+    for af in audio_files:
+        features['label'].append(af.label_id)
+        try:
+            y, sr = librosa.load('src/static/dataset/'+af.name)
+        except:
+            y = []
+        features['contrast'].append(librosa.feature.spectral_contrast(S=S, sr=sr))
+    return features
+
+
+def _extract_tempogram():
+    features = {'label': [], 'tempogram': []}
+    audio_files = AudioFile.query.order_by('id').all()
+    for af in audio_files:
+        features['label'].append(af.label_id)
+        try:
+          y, sr = librosa.load('/src/static/dataset/'+af.name)
+        except:
+          y = []
+        hop_length = 512
+        oenv = librosa.onset.onset_strength(y=y, sr=sr, hop_length=hop_length)
+        tempogram = librosa.feature.tempogram(onset_envelope=oenv, sr=sr,
+                                                        hop_length=hop_length)
+        features['tempogram'].append(tempogram)
+    return features
+
+def _extract_fourier_tempogram():
+    features = {'label': [], 'fourier_tempogram': []}
+    audio_files = AudioFile.query.order_by('id').all()
+    for af in audio_files:
+        features['label'].append(af.label_id)
+        try:
+          y, sr = librosa.load('/src/static/dataset/'+af.name)
+        except:
+          y = []
+        hop_length = 512
+        oenv = librosa.onset.onset_strength(y=y, sr=sr, hop_length=hop_length)
+        f_tempogram = librosa.feature.fourier_tempogram(onset_envelope=oenv, sr=sr,
+                                                        hop_length=hop_length)
+        features['fourier_tempogram'].append(f_tempogram)
+    return features
+
+def _extract_mfcc_delta():
+    features = {'label': [], 'mfcc_deltas': []}
+    audio_files = AudioFile.query.order_by('id').all()
+    for af in audio_files:
+        features['label'].append(af.label_id)
+        try:
+          y, sr = librosa.load('/src/static/dataset/'+af.name)
+        except:
+          y = []
+        mfcc = librosa.feature.mfcc(y=y, sr=sr)
+        mfcc_delta = librosa.feature.delta(mfcc)
+        mfcc_delta2 = librosa.feature.delta(mfcc, order=2)
+        deltas = {'mfcc': mfcc, 'mfcc_delta': mfcc_delta, 'mfcc_delta2': mfcc_delta2}
+        features['mfcc_deltas'].append(deltas)
+    return features
+
+def _extract_stack():
+    features = {'label': [], 'stack': []}
+    audio_files = AudioFile.query.order_by('id').all()
+    for af in audio_files:
+        features['label'].append(af.label_id)
+        try:
+          y, sr = librosa.load('/src/static/dataset/'+sample.name)
+        except:
+          y = []
+        chroma = librosa.feature.chroma_stft(y=y, sr=sr)
+        tempo, beats = librosa.beat.beat_track(y=y, sr=sr, hop_length=512)
+        beats = librosa.util.fix_frames(beats, x_min=0, x_max=chroma.shape[1])
+        chroma_sync = librosa.util.sync(chroma, beats)
+        chroma_lag = librosa.feature.stack_memory(chroma_sync, n_steps=3,
+                                                      mode='edge')
+        features['stack'].append(chroma_lag)
+    return features
 
 
 @blueprint.context_processor

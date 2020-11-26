@@ -34,6 +34,7 @@ Feature Selection
 </nav>
 
 <section class="section">
+	<form method="post" action="{{ url_for('public.export_data') }}" >
         <div class="container">
           <div class="columns is-multiline">
             <div class="column is-one-third">
@@ -49,17 +50,17 @@ Feature Selection
                     <p class="is-size-5 subtitle">
                        <p>Select the type of features you are most interested in.</p>
                        <div class="buttons has-addons">
-												 <button class="button  {% if feature_type == 'spectral' %}is-success is-selected "{% else %}" onclick='loadSpectralFeatures()' {% endif %}>Spectral</button>
-												 <button class="button {% if feature_type == 'rhythmic' %} is-success is-selected "{% else %}" onclick='loadRhythmicFeatures()'{% endif %}>Rhythmic</button>
-                         <button class="button {% if feature_type == 'deltas' %} is-success is-selected "{% else %}" onclick='loadDeltaFeatures()'{% endif %}>Deltas</button>
+												 <button type="button" class="button  {% if feature_type == 'spectral' %}is-success is-selected "{% else %}" onclick='loadSpectralFeatures()' {% endif %}>Spectral</button>
+												 <button type="button" class="button {% if feature_type == 'rhythmic' %} is-success is-selected "{% else %}" onclick='loadRhythmicFeatures()'{% endif %}>Rhythmic</button>
+                         <button type="button" class="button {% if feature_type == 'deltas' %} is-success is-selected "{% else %}" onclick='loadDeltaFeatures()'{% endif %}>Deltas</button>
                         </div>
                        <p>Export selected features as:</p>
                        <div class="buttons has-addons">
-                          <button class="button is-success is-selected">JSON</button>
-                          <button class="button">CSV</button>
-                          <button class="button">Plain Text</button>
+                          <button class="button is-success is-selected"  value="JSON">JSON</button>
+                          <button class="button" disabled>CSV</button>
+                          <button class="button" disabled>Plain Text</button>
                         </div>
-
+                    <button class="is-primary" type="submit" value="Export">Export</a>
                     </p>
                   </div>
                 </div>
@@ -108,7 +109,7 @@ Feature Selection
                       </figure>
                     </p>
                     <label class="checkbox">
-                      <input type="checkbox">
+                      <input type="checkbox" name="mel-spectrogram">
                       Select this feature
                     </label>
                   </div>
@@ -120,7 +121,7 @@ Feature Selection
                         <img src="{{features.tempogram}}" alt="tempogram">
                       </figure>
                     </p>
-                    <label class="checkbox">
+                    <label class="checkbox" name="tempogram">
                       <input type="checkbox">
                       Select this feature
                     </label>
@@ -133,7 +134,7 @@ Feature Selection
                         <img src="{{features.mfccs}}" alt="MFCC Deltas">
                       </figure>
                     <label class="checkbox">
-                      <input type="checkbox">
+                      <input type="checkbox" name="mfcc-deltas">
                       Select this feature
                     </label>
                     </p>
@@ -153,7 +154,6 @@ Feature Selection
                   <div class="content">
                     <h1 class="title is-size-4">Metadata</h1>
                     <p class="is-size-5 subtitle">
-                      {# <p><b>Filename: </b>0a7cnohash_0.wav<br><b>Label:</b> Down<br><b>Sample Rate:</b> 44100<br><b>Text:</b> Emotive Neutral</p> #}
 											<p><b>Label:</b> {{sample.name|split_name_label|title}}<br><b>Sample Rate:</b> {{sample.sample_rate}}<br><b>Text:</b> {% if sample.text and 'data' in sample.text %}{{sample.text.data}}{% else %}(None){% endif %}</p>
                     </p>
                   </div>
@@ -177,8 +177,8 @@ Feature Selection
                         <img src="{{features.tonnetz}}" alt="tonal centroid & chroma">
                         {# <img src="/static/chromavstonnetz.png" alt="tonal-centroid"> #}
                       </figure>
-                    <label class="checkbox">
-                      <input type="checkbox">
+                    <label class="checkbox" >
+                      <input type="checkbox" name="tonnetz">
                       Select this feature
                     </label>
                     </p>
@@ -191,7 +191,7 @@ Feature Selection
                         <img src="{{features.f_tempogram}}" alt="fourier-tempogram">
                       </figure>
                     <label class="checkbox">
-                      <input type="checkbox">
+                      <input type="checkbox" name="f-tempo">
                       Select this feature
                     </label>
                     </p>
@@ -204,7 +204,7 @@ Feature Selection
                         <img src="{{features.stack}}" alt="stack memory">
                       </figure>
                     <label class="checkbox">
-                      <input type="checkbox">
+                      <input type="checkbox" name="stack">
                       Select this feature
                     </label>
                     </p>
@@ -230,7 +230,7 @@ Feature Selection
                         <img src="{{features.power}}" alt="power-contrast">
                       </figure>
                    <label class="checkbox">
-                      <input type="checkbox">
+                      <input type="checkbox" name="power">
                       Select this feature
                     </label>
                   </p>
@@ -242,6 +242,7 @@ Feature Selection
             </div>
           </div>
         </div>
+			</form>
       </section>
     <!-- Image modal -->
     <div id="modal-image2" class="modal modal-fx-3dSlit">
