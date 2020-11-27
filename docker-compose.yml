@@ -1,0 +1,25 @@
+version: '3.7'
+
+services:
+  app:
+    build: .
+    container_name: audiosoup-app
+    ports:
+      - 5000:5000
+    environment:
+      DATABASE_URL: ${PG_CONNECTION_URI}
+      PORT: 5000
+      FLASK_APP: '/src/app.py'
+    depends_on:
+      - postgres
+
+  postgres:
+    container_name: postgres
+    image: postgres:11.2-alpine
+    ports:
+        - 5432:5432
+    environment:
+      POSTGRES_USER: ${PG_USERNAME}
+      POSTGRES_PASSWORD: ${PG_PASSWORD}
+      POSTGRES_DB: ${PG_DATABASE}
+
