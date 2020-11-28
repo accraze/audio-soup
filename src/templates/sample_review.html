@@ -115,7 +115,7 @@
             </div>
 						<p id="modal-card2_{{sample.id}}-metadata"><b>Label:</b> {{sample.name|split_name_label|title}}<br><b>Sample Rate:</b> {{sample.sample_rate}}<br><b>Text:</b> {% if sample.text and 'data' in sample.text %}{{sample.text.data}}{% endif %}</p>
               {# <b>Last Edited:</b> <time datetime="2018-02-02">12:45 AM - 20 May 2018</time> #}
-              <form id="modal-card2_{{sample.id}}-metadata-form" style="visibility: hidden;" method="post" action="">
+              <form id="modal-card2_{{sample.id}}-metadata-form" style="display: none;" method="post" action="">
               <input value="{{sample.id}}" name="_id" style="display:none;">
               <p><b>Label:</b>
               <div class="select">
@@ -124,7 +124,7 @@
                   <option value='{{label.id}}' {% if label.id == sample.label_id %} selected {%endif%}>{{label.name|title}}</option>
                   {% endfor %}
                 </select>
-							</div><br><b>Sample Rate:<input class="input" type="text" value="{{sample.sample_rate}}" name="sample_rate"></b> <br><b>Text:</b><input class="input" type="text" name="text" {% if  sample.text and 'data' in sample.text %} value='{{sample.text.data}}' {% endif %}></input><br>
+							</div><br><b>Sample Rate:<input class="input" type="text" value="{{sample.sample_rate}}" name="sample_rate"></b> <br><b>Text:</b><input class="input" type="text" name="text" {% if  sample.text and 'data' in sample.text %} value='{{sample.text.data}}' {% endif %}></input></p><br>
               {# <b>Last Edited:</b> <time datetime="2018-02-02">12:45 AM - 20 May 2018</time></p> #}
               <div class="field is-grouped is-grouped-left">
                 <p class="control">
