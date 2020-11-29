@@ -280,7 +280,10 @@ Feature Selection
               {# <br><br> #}
               </div>
             </div>
-              <p id="modal-card2_{{sample.id}}-metadata"><b>This spectrogram shows frequencies being converted to the mel-scale, within a filter bank across time.</p>
+              <p id="modal-card2_{{sample.id}}-mel-info">This feature contains the spectrum of frequencies across time. It is converted to the <a href="https://en.wikipedia.org/wiki/Mel_scale" target="_blank">Mel-scale</a> to "flatten" the frequencies so they are equally distant to the human ear.</p><br>
+              <p> The visual representation is displayed as a heatmap showing brighter colors where the frequencies are the loudest.</p><br>
+              <p><b>More Info:</b> <a href="https://en.wikipedia.org/wiki/Spectrogram" target="_blank">Spectogram</a></p>
+
               {# <b>Last Edited:</b> <time datetime="2018-02-02">12:45 AM - 20 May 2018</time> #}
           </div>
         </div>
@@ -316,7 +319,9 @@ Feature Selection
               {# <br><br> #}
               </div>
             </div>
-              <p id="modal-card2_{{sample.id}}-metadata">The tonal features (tonnetz) are computed using the harmonic component of the audio sample. The Chromagram shows where the sound lies within the 12 different pitches classes.</p>
+              <p id="modal-card2_{{sample.id}}-metadata">This feature contains the tonal space and computes the harmonic change within an audio sample. The Chromagram shows where the sound lies within the 12 different pitches classes.</p><br>
+              <p><b>More Info:</b> <a href="https://en.wikipedia.org/wiki/Tonnetz" target="_blank">Tonnetz</a></p>
+
               {# <b>Last Edited:</b> <time datetime="2018-02-02">12:45 AM - 20 May 2018</time> #}
           </div>
         </div>
@@ -353,8 +358,9 @@ Feature Selection
               {# <br><br> #}
               </div>
             </div>
-              <p id="modal-card2_{{sample.id}}-metadata">Spectral Contrast: Each frame of a spectrogram S is divided into sub-bands. For each sub-band, the energy contrast is estimated by comparing the mean energy in the top quantile (peak energy) to that of the bottom quantile (valley energy). High contrast values generally correspond to clear, narrow-band signals, while low contrast values correspond to broad-band noise. <br><br>- Jiang, Dan-Ning, Lie Lu, Hong-Jiang Zhang, Jian-Hua Tao, and Lian-Hong Cai. “Music type classification by spectral contrast feature.” In Multimedia and Expo, 2002. ICME’02. Proceedings. 2002 IEEE International Conference on, vol. 1, pp. 113-116. IEEE, 2002.
-</p>
+              <p id="modal-card2_{{sample.id}}-metadata">This feature indicates at which frequency the energy of a spectrum is centered upon. The spectral contrast considers the spectral peak, the spectral valley, and their difference in each frequency subband.</p><br>
+              <p><b>More Info:</b> <a href="http://citeseerx.ist.psu.edu/viewdoc/download?doi=10.1.1.583.7201&rep=rep1&type=pdf" target="_blank">Spectral Contrast</a></p>
+
               {# <b>Last Edited:</b> <time datetime="2018-02-02">12:45 AM - 20 May 2018</time> #}
           </div>
         </div>
