@@ -466,7 +466,8 @@ Feature Selection
               {# <br><br> #}
               </div>
             </div>
-						<p id="modal-card2_{{sample.id}}-mfccs-data"><b>Local estimate of the derivative of the input data along the selected axis. Delta features are computed Savitsky-Golay filtering..</p>
+						<p id="modal-card2_{{sample.id}}-mfccs-data">This feature computes the local estimate of the derivative of the input data (<a href="https://en.wikipedia.org/wiki/Mel-frequency_cepstrum" target="_blank">MFCC</a>) along the selected axis. Delta features are computed using <a href="https://en.wikipedia.org/wiki/Savitzky%E2%80%93Golay_filter" target="_blank">Savitsky-Golay filtering.</a></p><br>
+            <p><b>More Info:</b> <a href="https://wiki.aalto.fi/display/ITSP/Deltas+and+Delta-deltas" target="_blank">Delta Features</a></p>
           </div>
         </div>
         <!-- end content -->
@@ -500,7 +501,7 @@ Feature Selection
               {# <br><br> #}
               </div>
             </div>
-						<p id="modal-card2_{{sample.id}}-mfccs-data"><b>Short-term history embedding: vertically concatenate a data vector or matrix with delayed copies of itself.</p>
+						<p id="modal-card2_{{sample.id}}-mfccs-data">This feature contains short-term history embeddings. This mean we can vertically concatenate a data vector or matrix with delayed copies of itself.</p>
           </div>
         </div>
         <!-- end content -->
