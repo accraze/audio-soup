@@ -1,15 +1,38 @@
 ![GitHub](https://img.shields.io/github/license/accraze/audio-soup)
 
 # audio-soup
-Interactive Machine Learning tool designed for sample review and feature selection on audio datasets.
+Sample review and feature selection for audio datasets.
 
-## quickstart
+## Quick Start
+First make sure Docker is installed on your local machine.
+Now build the required containers:
 ```
-env FLASK_APP=appy.py flask run
+make start
 ```
+Next, apply the database schema:
+```
+make upgrade
+```
+The application should now be available at 0.0.0.0:5000
 
-## loading dataset
-
+## Loading a dataset
+You can load your own dataset by adding the dataset within the
+`src/static/dataset/` directory. The dataset should resemble the following format:
 ```
-python manage.py load_dataset 'dataset_dir' 'dataset_name' 'dataset_url'
+src/static/dataset
+├── label-1
+│   ├── file1.wav
+│   ├── file2.wav
+│   └── file-n.wav
+├── label-2
+│   ├── file-foo.wav
+│   └── file-n.wav
+└── label n...
+    ├── 0a7c2a8d_null_0.wav
+    └── 0a7c2a8d_null_1.wav
+```
+Once you have placed your dataset in the required directory, make sure you have
+built the containers and then load the dataset using the following
+```
+make seed  'dataset_dir' 'dataset_name' 'dataset_url'
 ```
