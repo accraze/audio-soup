@@ -1,5 +1,7 @@
+![GitHub](https://img.shields.io/github/license/accraze/audio-soup)
+
 # audio-soup
-[WIP] IML tool for audio sample review and feature selection.
+Interactive Machine Learning tool designed for sample review and feature selection on audio datasets.
 
 ## quickstart
 ```
