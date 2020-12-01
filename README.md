@@ -1,3 +1,5 @@
+![GitHub release (latest
+SemVer)](https://img.shields.io/github/v/release/accraze/audio-soup)
 ![GitHub](https://img.shields.io/github/license/accraze/audio-soup)
 
 # audio-soup
