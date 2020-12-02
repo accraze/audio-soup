@@ -1,7 +1,8 @@
-![GitHub release (latest
-SemVer)](https://img.shields.io/github/v/release/accraze/audio-soup)
-![GitHub](https://img.shields.io/github/license/accraze/audio-soup)
-![Docker Pulls](https://img.shields.io/docker/pulls/accraze/audio-soup)
+[![GitHub release (latest
+SemVer)](https://img.shields.io/github/v/release/accraze/audio-soup)](https://github.com/accraze/audio-soup/releases)
+[![GitHub](https://img.shields.io/github/license/accraze/audio-soup)](https://github.com/accraze/audio-soup/blob/master/LICENSE)
+[![Docker
+Pulls](https://img.shields.io/docker/pulls/accraze/audio-soup)](https://hub.docker.com/r/accraze/audio-soup)
 
 # audio-soup
 Sample review and feature selection for audio datasets.
