@@ -7,6 +7,10 @@ Pulls](https://img.shields.io/docker/pulls/accraze/audio-soup)](https://hub.dock
 # audio-soup
 Sample review and feature selection for audio datasets.
 
+<img src="https://imgur.com/FFqIscH.gif" width="600">
+
+View the demo: https://audio-soup.herokuapp.com/
+
 ## Quick Start
 First make sure Docker is installed on your local machine.
 Now build the required containers:
