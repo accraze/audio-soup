@@ -24,3 +24,7 @@ upgrade:
 
 seed:
 	docker exec -it audiosoup-app sh -c "cd /src/ && python -m flask load-dataset -p 'static/dataset/' -n 'foo' -u 'foo.com'"
+
+routes:
+	docker exec -it audiosoup-app sh -c "cd /src/ && python -m flask routes"
+
