@@ -4,15 +4,16 @@ import os
 
 import click
 
-HERE = os.path.abspath(os.path.dirname(__file__))
-PROJECT_ROOT = os.path.join(HERE, os.pardir)
-TEST_PATH = os.path.join(PROJECT_ROOT, "tests")
-
 import wave
 from flask.cli import with_appcontext
 
 from .extensions import db
-from .models import *
+from .models import Dataset, Label, AudioFile
+
+
+HERE = os.path.abspath(os.path.dirname(__file__))
+PROJECT_ROOT = os.path.join(HERE, os.pardir)
+TEST_PATH = os.path.join(PROJECT_ROOT, "tests")
 
 @click.command()
 @click.option(
@@ -38,6 +39,15 @@ from .models import *
 )
 @with_appcontext
 def load_dataset(dataset_dirpath, dataset_name, dataset_url):
+    """
+    Load a dataset into the application DB.
+    :param dataset_dirpath: The directory location of the dataset
+    :type dataset_dirpath: str
+    :param dataset_name: The name of the dataset
+    :type dataset_name: str
+    :param dataset_url: An associated URL for the dataset (optional)
+    :type dataset_url: str
+    """
     print('loading dataset {}'.format(dataset_name))
     ds = Dataset(name=dataset_name, url=dataset_url)
     db.session.add(ds)
@@ -45,7 +55,7 @@ def load_dataset(dataset_dirpath, dataset_name, dataset_url):
     sub_dirs = [x for x in os.walk(dataset_dirpath)][1:]
     print(sub_dirs)
     #labels = [sd.split('/')[1]for sd[0] in sub_dirs]
-    counter=  0
+    counter = 0
     for sd in sub_dirs:
         # create label
         label_name = sd[0].split('/')[2]
@@ -69,8 +79,8 @@ def load_dataset(dataset_dirpath, dataset_name, dataset_url):
             # now add file to DB
             print('adding {} to db'.format(fname))
             db.session.add(AudioFile(name=fname,
-                                      sample_rate=sr, dataset_id=ds.id,
-                                      label_id=label.id))
+                                     sample_rate=sr, dataset_id=ds.id,
+                                     label_id=label.id))
             db.session.commit()
     print('Total files added to dataset: {}'.format(counter))
 
